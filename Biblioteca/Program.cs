@@ -6,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-var connectionString = builder.Configuration.GetConnectionString("CinemaApiConnection");
+var connectionString = builder.Configuration.GetConnectionString("BibliotecaConnection");
 
 builder.Services.AddDbContext<AppDbContext>(opts =>
     opts.UseLazyLoadingProxies().UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
