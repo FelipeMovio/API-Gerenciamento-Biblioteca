@@ -17,8 +17,8 @@ public class Livro
     public bool Disponivel { get; set; } = true;
 
     // Navegação
-    public Categoria? Categoria { get; set; }
+    public virtual Categoria? Categoria { get; set; }
 
-    public ICollection<Emprestimo> Emprestimos { get; set; }
+    public virtual ICollection<Emprestimo> Emprestimos { get; set; }
         = new List<Emprestimo>();
 }

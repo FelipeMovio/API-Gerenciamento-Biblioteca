@@ -13,6 +13,6 @@ public class Usuario
     public DateTime DataCadastro { get; set; } = DateTime.UtcNow;
 
     // Navegação
-    public ICollection<Emprestimo> Emprestimos { get; set; }
+    public virtual ICollection<Emprestimo> Emprestimos { get; set; }
         = new List<Emprestimo>();
 }

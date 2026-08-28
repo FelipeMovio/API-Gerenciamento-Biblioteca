@@ -15,7 +15,7 @@ public class Emprestimo
     public DateTime? DataDevolucao { get; set; }
 
     // Navegação
-    public Livro? Livro { get; set; }
+    public virtual Livro? Livro { get; set; }
 
-    public Usuario? Usuario { get; set; }
+    public virtual Usuario? Usuario { get; set; }
 }
