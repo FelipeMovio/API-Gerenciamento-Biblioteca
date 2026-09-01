@@ -1,6 +1,10 @@
 ﻿using AutoMapper;
 using Biblioteca.Data;
+using Biblioteca.Dtos;
+using Biblioteca.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using static System.Net.WebRequestMethods;
 
 namespace Biblioteca.Services;
 
@@ -14,5 +18,16 @@ public class LivrosService
         this._context = appDbContext;
         this._mapper = mapper;
 
+    }
+
+    public IActionResult CriarLivro
+        (CreateLivroDto livroDto)
+    {
+        Livro livro = _mapper.Map<Livro>(livroDto);
+        
+        _context.Livros.Add(livro);
+        _context.SaveChanges();
+
+        return _mapper.Map<ReadLivroDto>(livro);
     }
 }
