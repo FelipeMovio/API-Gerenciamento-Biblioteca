@@ -15,4 +15,7 @@ public class CreateLivroDto
 
     [Required(ErrorMessage = "")]
     public int AnoPublicacao { get; set; }
+
+    [Required(ErrorMessage = "")]
+    public int CategoriaId { get; set; }
 }

@@ -13,6 +13,9 @@ public class AppDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
+        builder.Entity<Usuario>()
+            .HasIndex(u => u.Email)
+            .IsUnique();
     }
 
     public DbSet<Categoria> Categorias { get; set; }

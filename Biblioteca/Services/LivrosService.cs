@@ -10,8 +10,8 @@ namespace Biblioteca.Services;
 
 public class LivrosService 
 {
-    private AppDbContext _context;
-    private IMapper _mapper;
+    private readonly AppDbContext _context;
+    private readonly IMapper _mapper;
 
     public LivrosService(AppDbContext appDbContext, IMapper mapper)
     {
@@ -28,6 +28,7 @@ public class LivrosService
         _context.Livros.Add(livro);
         _context.SaveChanges();
 
-        return _mapper.Map<ReadLivroDto>(livro);
+        //return _mapper.Map<ReadLivroDto>(livro);
+        return null;
     }
 }
