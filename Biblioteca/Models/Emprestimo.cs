@@ -1,7 +1,10 @@
-﻿namespace Biblioteca.Models;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Biblioteca.Models;
 
 public class Emprestimo
 {
+    [Key]
     public int Id { get; set; }
 
     public int LivroId { get; set; }

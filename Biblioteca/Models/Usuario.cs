@@ -1,7 +1,10 @@
-﻿namespace Biblioteca.Models;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Biblioteca.Models;
 
 public class Usuario
 {
+    [Key]
     public int Id { get; set; }
 
     public string Nome { get; set; } = string.Empty;
