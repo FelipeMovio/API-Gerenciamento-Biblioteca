@@ -15,4 +15,6 @@ public class ReadLivroDto
     public int CategoriaId { get; set; }
 
     public bool Disponivel { get; set; }
+
+    public CategoriaLivroDto? Categoria { get; set; }
 }
