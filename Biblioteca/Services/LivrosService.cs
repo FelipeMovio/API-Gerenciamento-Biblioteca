@@ -13,14 +13,13 @@ public class LivrosService
     private readonly AppDbContext _context;
     private readonly IMapper _mapper;
 
-    public LivrosService(AppDbContext appDbContext, IMapper mapper)
+    public LivrosService(AppDbContext context, IMapper mapper)
     {
-        this._context = appDbContext;
-        this._mapper = mapper;
-
+        _context = context;
+        _mapper = mapper;
     }
 
-    public IActionResult CriarLivro
+    public ReadLivroDto CriarLivro
         (CreateLivroDto livroDto)
     {
         Livro livro = _mapper.Map<Livro>(livroDto);
@@ -28,7 +27,7 @@ public class LivrosService
         _context.Livros.Add(livro);
         _context.SaveChanges();
 
-        //return _mapper.Map<ReadLivroDto>(livro);
-        return null;
+        return _mapper.Map<ReadLivroDto>(livro);
+
     }
 }

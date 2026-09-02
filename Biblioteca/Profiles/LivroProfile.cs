@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Biblioteca.Dtos;
 using Biblioteca.Models;
-using static System.Net.WebRequestMethods;
 
 namespace Biblioteca.Profiles;
 
