@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Biblioteca.Data;
 using Biblioteca.Dtos;
+using Biblioteca.Exceptions;
 using Biblioteca.Models;
 
 namespace Biblioteca.Services;
@@ -18,6 +19,12 @@ public class LivrosService
 
     public ReadLivroDto CreateLivro(CreateLivroDto livroDto)
     {
+        bool categoriaExiste = _context.Categorias
+            .Any(c => c.Id == livroDto.CategoriaId);
+
+        if (!categoriaExiste)
+            throw new CategoriaNaoEncontradaException(livroDto.CategoriaId);
+
         Livro livro = _mapper.Map<Livro>(livroDto);
 
         _context.Livros.Add(livro);
@@ -52,6 +59,13 @@ public class LivrosService
 
         if (livro == null)
             return false;
+
+        bool categoriaExiste = _context.Categorias
+            .Any(c => c.Id == updateLivroDto.CategoriaId);
+
+        if (!categoriaExiste)
+            throw new CategoriaNaoEncontradaException(
+                updateLivroDto.CategoriaId);
 
         _mapper.Map(updateLivroDto, livro);
 
