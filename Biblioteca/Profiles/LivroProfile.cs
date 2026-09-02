@@ -10,7 +10,7 @@ public class LivroProfile : Profile
     public LivroProfile()
     {
         CreateMap<CreateLivroDto, Livro>();
-
+        CreateMap<LivroUpdateDto, Livro>();
         CreateMap<Livro, ReadLivroDto>();
     }
 }
