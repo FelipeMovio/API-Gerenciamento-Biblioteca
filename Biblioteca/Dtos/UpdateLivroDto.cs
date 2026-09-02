@@ -1,6 +1,6 @@
 ﻿namespace Biblioteca.Dtos;
 
-public class LivroUpdateDto
+public class UpdateLivroDto
 {
     public string Titulo { get; set; } = string.Empty;
 
