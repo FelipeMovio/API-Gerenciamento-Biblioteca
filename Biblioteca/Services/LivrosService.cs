@@ -2,14 +2,10 @@
 using Biblioteca.Data;
 using Biblioteca.Dtos;
 using Biblioteca.Models;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Filters;
-using static System.Net.WebRequestMethods;
 
 namespace Biblioteca.Services;
 
-public class LivrosService 
+public class LivrosService
 {
     private readonly AppDbContext _context;
     private readonly IMapper _mapper;
@@ -20,50 +16,61 @@ public class LivrosService
         _mapper = mapper;
     }
 
-    public ReadLivroDto CreateLivro
-        (CreateLivroDto livroDto)
+    public ReadLivroDto CreateLivro(CreateLivroDto livroDto)
     {
         Livro livro = _mapper.Map<Livro>(livroDto);
-        
+
         _context.Livros.Add(livro);
         _context.SaveChanges();
 
         return _mapper.Map<ReadLivroDto>(livro);
-
     }
 
     public List<ReadLivroDto> GetLivros()
     {
-        return _mapper.Map<List<ReadLivroDto>>
-            (_context.Livros.ToList());
+        return _mapper.Map<List<ReadLivroDto>>(
+            _context.Livros.ToList());
     }
 
-    public ReadLivroDto GetLivroById(int id)
+    public ReadLivroDto? GetLivroById(int id)
     {
-        Livro livro = _context.Livros.FirstOrDefault
-            (l => l.Id == id);
+        Livro? livro = _context.Livros
+            .FirstOrDefault(l => l.Id == id);
+
+        if (livro == null)
+            return null;
 
         return _mapper.Map<ReadLivroDto>(livro);
-
     }
 
-    public void UpdateLivro(int id,
+    public bool UpdateLivro(
+        int id,
         UpdateLivroDto updateLivroDto)
     {
-        Livro livro = _context.Livros.FirstOrDefault
-            (l => l.Id == id);
+        Livro? livro = _context.Livros
+            .FirstOrDefault(l => l.Id == id);
+
+        if (livro == null)
+            return false;
 
         _mapper.Map(updateLivroDto, livro);
+
         _context.SaveChanges();
 
+        return true;
     }
 
-    public void DeleteLivro(int id)
+    public bool DeleteLivro(int id)
     {
-        Livro livro = _context.Livros.FirstOrDefault
-            (l => l.Id == id);
+        Livro? livro = _context.Livros
+            .FirstOrDefault(l => l.Id == id);
 
-        _context.Remove(livro);
+        if (livro == null)
+            return false;
+
+        _context.Livros.Remove(livro);
         _context.SaveChanges();
+
+        return true;
     }
 }
