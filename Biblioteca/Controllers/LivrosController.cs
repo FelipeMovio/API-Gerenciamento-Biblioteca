@@ -3,7 +3,7 @@ using Biblioteca.Exceptions;
 using Biblioteca.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Biblioteca.Controlles;
+namespace Biblioteca.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
