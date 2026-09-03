@@ -1,5 +1,5 @@
 ﻿using Biblioteca.Dtos;
-using Biblioteca.Models;
+using Biblioteca.Exceptions;
 using Biblioteca.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,7 +7,7 @@ namespace Biblioteca.Controlles;
 
 [ApiController]
 [Route("api/[controller]")]
-public class LivrosController : Controller
+public class LivrosController : ControllerBase
 {
     private readonly LivrosService _livrosService;
 
@@ -20,26 +20,36 @@ public class LivrosController : Controller
     public IActionResult CreateLivro
         ([FromBody] CreateLivroDto livroDto)
     {
-       var livro = _livrosService.CreateLivro(livroDto);
-
-        if (livro == null)
+        try
         {
-            return NotFound();
+            var livro = _livrosService.CreateLivro(livroDto);
+
+            if (livro == null)
+            {
+                return NotFound();
+            }
+
+            return CreatedAtAction(
+                nameof(GetLivroById),
+                new { id = livro.Id },
+                livro);
         }
-
-        return Ok(livro);
+        catch (CategoriaNaoEncontradaException ex)
+        {
+            return NotFound(new
+            {
+                message = ex.Message
+            });
+        }
     }
-
     [HttpGet]
-    public IEnumerable<ReadLivroDto> GetLivros
-        ([FromQuery] int skip = 0,
-        [FromQuery] int take = 50)
+    public ActionResult<List<ReadLivroDto>> GetLivros()
     {
         List<ReadLivroDto> livros = _livrosService.GetLivros();
 
         if(livros == null)
         {
-            return (IEnumerable<ReadLivroDto>)NotFound();
+            return NotFound();
         }
 
         return livros;
@@ -48,7 +58,7 @@ public class LivrosController : Controller
     [HttpGet("{id}")]
     public IActionResult GetLivroById(int id)
     {
-        ReadLivroDto livro = _livrosService.GetLivroById(id);
+        ReadLivroDto? livro = _livrosService.GetLivroById(id);
 
         if (livro == null)
         {
@@ -65,16 +75,26 @@ public class LivrosController : Controller
     public IActionResult UpdateLivro(int id,
         [FromBody] UpdateLivroDto updateLivroDto)
     {
-        bool livroDto = _livrosService.UpdateLivro(id, updateLivroDto);
-
-        if (!livroDto)
+        try
         {
-            return BadRequest();
+            bool livroDto = _livrosService.UpdateLivro(id, updateLivroDto);
+
+            if (!livroDto)
+            {
+                return NotFound();
+            }
+
+            return NoContent();
+
         }
-
-        return NoContent();
-    }
-
+        catch (CategoriaNaoEncontradaException ex)
+        {
+            return NotFound(new
+            {
+                message = ex.Message
+            });
+        }
+    } 
     [HttpDelete("{id}")]
     public IActionResult DeleteLivro(int id)
     {
@@ -82,9 +102,9 @@ public class LivrosController : Controller
 
         if (!livroDto)
         {
-            return BadRequest();
+            return NotFound();
         }
 
-        return Ok();
+        return NoContent();
     }
 }
