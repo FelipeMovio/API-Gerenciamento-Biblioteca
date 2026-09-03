@@ -1,5 +1,5 @@
 using Biblioteca.Data;
-using Microsoft.AspNetCore.Mvc.Filters;
+using Biblioteca.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +10,12 @@ var connectionString = builder.Configuration.GetConnectionString("BibliotecaConn
 
 builder.Services.AddDbContext<AppDbContext>(opts =>
     opts.UseLazyLoadingProxies().UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+
+builder.Services.AddScoped<LivrosService>();
+
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+builder.Services.AddControllers().AddNewtonsoftJson();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
