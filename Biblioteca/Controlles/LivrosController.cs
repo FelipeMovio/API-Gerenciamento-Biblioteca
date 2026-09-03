@@ -24,11 +24,6 @@ public class LivrosController : ControllerBase
         {
             var livro = _livrosService.CreateLivro(livroDto);
 
-            if (livro == null)
-            {
-                return NotFound();
-            }
-
             return CreatedAtAction(
                 nameof(GetLivroById),
                 new { id = livro.Id },
@@ -47,10 +42,7 @@ public class LivrosController : ControllerBase
     {
         List<ReadLivroDto> livros = _livrosService.GetLivros();
 
-        if(livros == null)
-        {
-            return NotFound();
-        }
+
 
         return livros;
     }
@@ -77,9 +69,9 @@ public class LivrosController : ControllerBase
     {
         try
         {
-            bool livroDto = _livrosService.UpdateLivro(id, updateLivroDto);
+            bool atualiza = _livrosService.UpdateLivro(id, updateLivroDto);
 
-            if (!livroDto)
+            if (!atualiza)
             {
                 return NotFound();
             }
@@ -98,9 +90,9 @@ public class LivrosController : ControllerBase
     [HttpDelete("{id}")]
     public IActionResult DeleteLivro(int id)
     {
-        bool livroDto = _livrosService.DeleteLivro(id);
+        bool remove = _livrosService.DeleteLivro(id);
 
-        if (!livroDto)
+        if (!remove)
         {
             return NotFound();
         }
