@@ -1,5 +1,5 @@
-using Biblioteca.Data;
-using Biblioteca.Services;
+using Biblioteca.Application.Services;
+using Biblioteca.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

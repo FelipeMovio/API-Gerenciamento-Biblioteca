@@ -1,7 +1,7 @@
-﻿using Biblioteca.Models;
+﻿using Biblioteca.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Biblioteca.Data;
+namespace Biblioteca.Infrastructure.Data;
 
 public class AppDbContext : DbContext
 {

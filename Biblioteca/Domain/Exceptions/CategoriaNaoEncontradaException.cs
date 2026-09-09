@@ -1,4 +1,4 @@
-﻿namespace Biblioteca.Exceptions;
+﻿namespace Biblioteca.Domain.Exceptions;
 
 public class CategoriaNaoEncontradaException : Exception
 {

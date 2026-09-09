@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using Biblioteca.Dtos;
-using Biblioteca.Models;
+using Biblioteca.Application.Dtos;
+using Biblioteca.Domain.Models;
 
-namespace Biblioteca.Profiles;
+namespace Biblioteca.Application.Profiles;
 
 public class LivroProfile : Profile
 {

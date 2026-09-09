@@ -1,9 +1,9 @@
-﻿using Biblioteca.Dtos;
-using Biblioteca.Exceptions;
-using Biblioteca.Services;
+﻿using Biblioteca.Application.Dtos;
+using Biblioteca.Application.Services;
+using Biblioteca.Domain.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Biblioteca.Controllers;
+namespace Biblioteca.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]

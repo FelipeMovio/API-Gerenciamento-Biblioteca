@@ -1,4 +1,4 @@
-﻿namespace Biblioteca.Dtos;
+﻿namespace Biblioteca.Application.Dtos;
 
 public class ReadLivroDto
 {

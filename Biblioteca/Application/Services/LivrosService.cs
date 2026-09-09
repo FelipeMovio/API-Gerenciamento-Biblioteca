@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using Biblioteca.Data;
-using Biblioteca.Dtos;
+using Biblioteca.Application.Dtos;
+using Biblioteca.Domain.Models;
 using Biblioteca.Exceptions;
-using Biblioteca.Models;
+using Biblioteca.Infrastructure.Data;
 
-namespace Biblioteca.Services;
+namespace Biblioteca.Application.Services;
 
 public class LivrosService
 {

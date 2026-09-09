@@ -21,8 +21,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Middleware\" />
-    <Folder Include="Filters\" />
+    <Folder Include="API\Middleware\" />
+    <Folder Include="API\Filters\" />
   </ItemGroup>
 
 </Project>

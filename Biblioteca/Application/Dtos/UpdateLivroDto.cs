@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Biblioteca.Dtos;
+namespace Biblioteca.Application.Dtos;
 
-public class CreateLivroDto
+public class UpdateLivroDto
 {
     [Required(ErrorMessage = "O título do livro é obrigatório.")]
     [StringLength(200, MinimumLength = 2,
@@ -26,4 +26,6 @@ public class CreateLivroDto
     [Range(1, int.MaxValue,
         ErrorMessage = "A categoria é obrigatória.")]
     public int CategoriaId { get; set; }
+
+    public bool Disponivel { get; set; }
 }
