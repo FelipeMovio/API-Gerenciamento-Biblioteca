@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Biblioteca.Application.Dtos;
+using Biblioteca.Domain.Exceptions;
 using Biblioteca.Domain.Models;
-using Biblioteca.Exceptions;
 using Biblioteca.Infrastructure.Data;
 
 namespace Biblioteca.Application.Services;
