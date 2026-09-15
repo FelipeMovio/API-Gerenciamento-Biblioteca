@@ -1,3 +1,4 @@
+using Biblioteca;
 using Biblioteca.Application.Services;
 using Biblioteca.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,8 @@ var connectionString = builder.Configuration.GetConnectionString("BibliotecaConn
 
 builder.Services.AddDbContext<AppDbContext>(opts =>
     opts.UseLazyLoadingProxies().UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+
+builder.Services.AddAppDI();
 
 builder.Services.AddScoped<LivrosService>();
 
