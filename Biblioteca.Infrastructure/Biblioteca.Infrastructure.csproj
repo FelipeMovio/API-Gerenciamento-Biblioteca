@@ -35,4 +35,12 @@
     <ProjectReference Include="..\Biblioteca.Domain\Biblioteca.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Modulos\CategoriaDb\" />
+    <Folder Include="Modulos\" />
+    <Folder Include="Modulos\UsuarioDb\" />
+    <Folder Include="Modulos\EmprestimoDb\" />
+    <Folder Include="Modulos\LivroDb\" />
+  </ItemGroup>
+
 </Project>

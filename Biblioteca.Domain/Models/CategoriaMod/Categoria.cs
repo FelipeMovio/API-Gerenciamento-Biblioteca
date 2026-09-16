@@ -1,7 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Biblioteca.Domain.Models.LivroMod;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Biblioteca.Domain.Models;
+namespace Biblioteca.Domain.Models.CategoriaMod;
 
 public class Categoria
 {

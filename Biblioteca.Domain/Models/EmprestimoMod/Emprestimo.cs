@@ -1,7 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Biblioteca.Domain.Models.LivroMod;
+using Biblioteca.Domain.Models.UsuarioMod;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Biblioteca.Domain.Models;
+namespace Biblioteca.Domain.Models.EmprestimoMod;
 
 public class Emprestimo
 {

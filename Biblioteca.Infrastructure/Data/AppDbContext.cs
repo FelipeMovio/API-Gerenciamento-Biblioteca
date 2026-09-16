@@ -1,4 +1,7 @@
-﻿using Biblioteca.Domain.Models;
+﻿using Biblioteca.Domain.Models.CategoriaMod;
+using Biblioteca.Domain.Models.EmprestimoMod;
+using Biblioteca.Domain.Models.LivroMod;
+using Biblioteca.Domain.Models.UsuarioMod;
 using Microsoft.EntityFrameworkCore;
 
 namespace Biblioteca.Infrastructure.Data;
