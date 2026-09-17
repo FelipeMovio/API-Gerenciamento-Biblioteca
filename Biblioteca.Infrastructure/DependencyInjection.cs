@@ -1,4 +1,4 @@
-﻿using Biblioteca.Infrastructure.Data;
+﻿using Biblioteca.Infrastructure.Modulos._Core.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

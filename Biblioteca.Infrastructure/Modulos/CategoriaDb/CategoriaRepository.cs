@@ -1,7 +1,7 @@
 ﻿
 
 using Biblioteca.Domain.Models.CategoriaMod;
-using Biblioteca.Infrastructure.Data;
+using Biblioteca.Infrastructure.Modulos._Core.Context;
 using Microsoft.EntityFrameworkCore;
 
 namespace Biblioteca.Infrastructure.Modulos.CategoriaDb;

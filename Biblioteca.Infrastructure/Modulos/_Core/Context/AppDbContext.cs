@@ -4,7 +4,7 @@ using Biblioteca.Domain.Models.LivroMod;
 using Biblioteca.Domain.Models.UsuarioMod;
 using Microsoft.EntityFrameworkCore;
 
-namespace Biblioteca.Infrastructure.Data;
+namespace Biblioteca.Infrastructure.Modulos._Core.Context;
 
 public class AppDbContext : DbContext
 {
