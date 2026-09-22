@@ -11,8 +11,6 @@
     <Folder Include="Modulos\CategoriaOps\Queries\" />
     <Folder Include="Modulos\EmprestimoOps\Commands\" />
     <Folder Include="Modulos\EmprestimoOps\Queries\" />
-    <Folder Include="Modulos\LivroOps\Commands\" />
-    <Folder Include="Modulos\LivroOps\Queries\" />
     <Folder Include="Modulos\UsuarioOps\Commands\" />
     <Folder Include="Modulos\UsuarioOps\Queries\" />
   </ItemGroup>

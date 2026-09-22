@@ -38,7 +38,6 @@
   <ItemGroup>
     <Folder Include="Modulos\UsuarioDb\" />
     <Folder Include="Modulos\EmprestimoDb\" />
-    <Folder Include="Modulos\LivroDb\" />
   </ItemGroup>
 
 </Project>
