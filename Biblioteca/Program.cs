@@ -1,5 +1,4 @@
 using Biblioteca;
-using Biblioteca.Application.Services;
 using Biblioteca.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,9 +9,8 @@ builder.Services.AddInfrastructureDI(builder.Configuration);
 // Application
 builder.Services.AddAppDI();
 
-builder.Services.AddScoped<LivrosService>();
-
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddAutoMapper(
+    AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services
     .AddControllers()

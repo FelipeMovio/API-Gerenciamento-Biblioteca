@@ -1,13 +1,15 @@
 ﻿using Biblioteca.Application;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Biblioteca;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddAppDI(this IServiceCollection service)
+    public static IServiceCollection AddAppDI(
+        this IServiceCollection services)
     {
-        service.AddApplicationDI()
-            .AddInfrastructureDI();
-        return service;
+        services.AddApplicationDI();
+
+        return services;
     }
 }

@@ -1,102 +1,102 @@
-﻿using Biblioteca.Application.Dtos;
-using Biblioteca.Application.Services;
-using Biblioteca.Domain.Exceptions;
-using Microsoft.AspNetCore.Mvc;
+﻿//using Biblioteca.Application.Dtos;
+//using Biblioteca.Application.Services;
+//using Biblioteca.Domain.Exceptions;
+//using Microsoft.AspNetCore.Mvc;
 
-namespace Biblioteca.API.Controllers;
+//namespace Biblioteca.API.Controllers;
 
-[ApiController]
-[Route("api/[controller]")]
-public class LivrosController : ControllerBase
-{
-    private readonly LivrosService _livrosService;
+//[ApiController]
+//[Route("api/[controller]")]
+//public class LivrosController : ControllerBase
+//{
+//    private readonly LivrosService _livrosService;
 
-    public LivrosController(LivrosService service)
-    {
-        this._livrosService = service;
-    }
+//    public LivrosController(LivrosService service)
+//    {
+//        this._livrosService = service;
+//    }
 
-    [HttpPost]
-    public IActionResult CreateLivro
-        ([FromBody] CreateLivroDto livroDto)
-    {
-        try
-        {
-            var livro = _livrosService.CreateLivro(livroDto);
+//    [HttpPost]
+//    public IActionResult CreateLivro
+//        ([FromBody] CreateLivroDto livroDto)
+//    {
+//        try
+//        {
+//            var livro = _livrosService.CreateLivro(livroDto);
 
-            return CreatedAtAction(
-                nameof(GetLivroById),
-                new { id = livro.Id },
-                livro);
-        }
-        catch (CategoriaNaoEncontradaException ex)
-        {
-            return NotFound(new
-            {
-                message = ex.Message
-            });
-        }
-    }
-    [HttpGet]
-    public ActionResult<List<ReadLivroDto>> GetLivros()
-    {
-        List<ReadLivroDto> livros = _livrosService.GetLivros();
-
-
-
-        return livros;
-    }
-
-    [HttpGet("{id}")]
-    public IActionResult GetLivroById(int id)
-    {
-        ReadLivroDto? livro = _livrosService.GetLivroById(id);
-
-        if (livro == null)
-        {
-            return NotFound();
-
-        }
-
-        return Ok(livro);
+//            return CreatedAtAction(
+//                nameof(GetLivroById),
+//                new { id = livro.Id },
+//                livro);
+//        }
+//        catch (CategoriaNaoEncontradaException ex)
+//        {
+//            return NotFound(new
+//            {
+//                message = ex.Message
+//            });
+//        }
+//    }
+//    [HttpGet]
+//    public ActionResult<List<ReadLivroDto>> GetLivros()
+//    {
+//        List<ReadLivroDto> livros = _livrosService.GetLivros();
 
 
-    }
 
-    [HttpPut("{id}")]
-    public IActionResult UpdateLivro(int id,
-        [FromBody] UpdateLivroDto updateLivroDto)
-    {
-        try
-        {
-            bool atualiza = _livrosService.UpdateLivro(id, updateLivroDto);
+//        return livros;
+//    }
 
-            if (!atualiza)
-            {
-                return NotFound();
-            }
+//    [HttpGet("{id}")]
+//    public IActionResult GetLivroById(int id)
+//    {
+//        ReadLivroDto? livro = _livrosService.GetLivroById(id);
 
-            return NoContent();
+//        if (livro == null)
+//        {
+//            return NotFound();
 
-        }
-        catch (CategoriaNaoEncontradaException ex)
-        {
-            return NotFound(new
-            {
-                message = ex.Message
-            });
-        }
-    } 
-    [HttpDelete("{id}")]
-    public IActionResult DeleteLivro(int id)
-    {
-        bool remove = _livrosService.DeleteLivro(id);
+//        }
 
-        if (!remove)
-        {
-            return NotFound();
-        }
+//        return Ok(livro);
 
-        return NoContent();
-    }
-}
+
+//    }
+
+//    [HttpPut("{id}")]
+//    public IActionResult UpdateLivro(int id,
+//        [FromBody] UpdateLivroDto updateLivroDto)
+//    {
+//        try
+//        {
+//            bool atualiza = _livrosService.UpdateLivro(id, updateLivroDto);
+
+//            if (!atualiza)
+//            {
+//                return NotFound();
+//            }
+
+//            return NoContent();
+
+//        }
+//        catch (CategoriaNaoEncontradaException ex)
+//        {
+//            return NotFound(new
+//            {
+//                message = ex.Message
+//            });
+//        }
+//    } 
+//    [HttpDelete("{id}")]
+//    public IActionResult DeleteLivro(int id)
+//    {
+//        bool remove = _livrosService.DeleteLivro(id);
+
+//        if (!remove)
+//        {
+//            return NotFound();
+//        }
+
+//        return NoContent();
+//    }
+//}
