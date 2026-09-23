@@ -25,8 +25,20 @@ public class LivrosController : ControllerBase
             command,
             cancellationToken);
 
-        return StatusCode(
-            StatusCodes.Status201Created,
-            livro);
+        return CreatedAtAction(
+            nameof(GetLivroById),
+            new { id = livro.Id },
+            livro); ;
+    }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetLivroById( int id, CancellationToken cancellationToken)
+    {
+        var livro = await _sender.Send( new ObterLivroPorIdQuery(id),cancellationToken);
+
+        if (livro is null)
+            return NotFound();
+
+        return Ok(livro);
     }
 }

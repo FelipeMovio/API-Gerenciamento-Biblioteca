@@ -5,18 +5,19 @@ using MediatR;
 namespace Biblioteca.Application.Modules.LivroOps.Queries;
 
 public sealed record ObterLivroPorIdQuery(int Id)
-    : IRequest<ObterLivroPorIdQuery.Response?>
+    : IRequest<ObterLivroPorIdQuery.Response>
 {
     public sealed class Handler(
         ILivroRepository livroRepository)
-        : IRequestHandler<ObterLivroPorIdQuery, Response?>
+        : IRequestHandler<ObterLivroPorIdQuery, Response>
     {
         public async Task<Response?> Handle(
             ObterLivroPorIdQuery request,
             CancellationToken cancellationToken)
         {
             var livro = await livroRepository.SelecionarAsync(
-                selector: l => new Response(
+                selector: l => new
+                {
                     l.Id,
                     l.Titulo,
                     l.Autor,
@@ -24,13 +25,27 @@ public sealed record ObterLivroPorIdQuery(int Id)
                     l.AnoPublicacao,
                     l.CategoriaId,
                     l.Disponivel,
-                    l.Categoria != null
+                    CategoriaNome = l.Categoria != null
                         ? l.Categoria.Nome
-                        : string.Empty),
+                        : string.Empty
+                },
                 predicate: l => l.Id == request.Id,
                 cancellationToken: cancellationToken);
 
-            return livro;
+            if (livro is null)
+                return null;
+
+            return new Response(
+                livro.Id,
+                livro.Titulo,
+                livro.Autor,
+                livro.ISBN,
+                livro.AnoPublicacao,
+                livro.CategoriaId,
+                livro.Disponivel,
+                new CategoriaResponse(
+                    livro.CategoriaId,
+                    livro.CategoriaNome));
         }
     }
 
@@ -42,10 +57,13 @@ public sealed record ObterLivroPorIdQuery(int Id)
         int AnoPublicacao,
         int CategoriaId,
         bool Disponivel,
-        string CategoriaNome);
+        CategoriaResponse Categoria);
 
-    public sealed class Validator
-        : AbstractValidator<ObterLivroPorIdQuery>
+    public sealed record CategoriaResponse(
+        int Id,
+        string Nome);
+
+    public class Validator : AbstractValidator<ObterLivroPorIdQuery>
     {
         public Validator()
         {
