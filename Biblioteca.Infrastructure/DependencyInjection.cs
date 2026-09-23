@@ -1,4 +1,5 @@
 ﻿using Biblioteca.Domain._Core.Base;
+using Biblioteca.Domain.Models.CategoriaMod;
 using Biblioteca.Infrastructure._Core.Base;
 using Biblioteca.Infrastructure.Modulos._Core.Context;
 using Biblioteca.Infrastructure.Modulos.CategoriaDb;
