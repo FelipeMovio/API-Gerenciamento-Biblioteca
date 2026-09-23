@@ -1,101 +1,76 @@
-﻿using Biblioteca.Dtos;
-using Biblioteca.Exceptions;
-using Biblioteca.Services;
+﻿using Biblioteca.Application.Modules.LivroOps.Commands;
+using Biblioteca.Application.Modules.LivroOps.Queries;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Biblioteca.Controllers;
+namespace Biblioteca.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
 public class LivrosController : ControllerBase
 {
-    private readonly LivrosService _livrosService;
+    private readonly ISender _sender;
 
-    public LivrosController(LivrosService service)
+    public LivrosController(ISender sender)
     {
-        this._livrosService = service;
+        _sender = sender;
     }
 
     [HttpPost]
-    public IActionResult CreateLivro
-        ([FromBody] CreateLivroDto livroDto)
+    public async Task<IActionResult> CreateLivro([FromBody] CriarLivroCommand command,
+    CancellationToken cancellationToken)
     {
-        try
-        {
-            var livro = _livrosService.CreateLivro(livroDto);
+        var livro = await _sender.Send(
+            command,
+            cancellationToken);
 
-            return CreatedAtAction(
-                nameof(GetLivroById),
-                new { id = livro.Id },
-                livro);
-        }
-        catch (CategoriaNaoEncontradaException ex)
-        {
-            return NotFound(new
-            {
-                message = ex.Message
-            });
-        }
-    }
-    [HttpGet]
-    public ActionResult<List<ReadLivroDto>> GetLivros()
-    {
-        List<ReadLivroDto> livros = _livrosService.GetLivros();
-
-
-
-        return livros;
+        return CreatedAtAction(
+            nameof(GetLivroById),
+            new { id = livro.Id },
+            livro); ;
     }
 
     [HttpGet("{id}")]
-    public IActionResult GetLivroById(int id)
+    public async Task<IActionResult> GetLivroById( int id, CancellationToken cancellationToken)
     {
-        ReadLivroDto? livro = _livrosService.GetLivroById(id);
+        var livro = await _sender.Send( new ObterLivroPorIdQuery(id),cancellationToken);
 
-        if (livro == null)
-        {
+        if (livro is null)
             return NotFound();
 
-        }
-
         return Ok(livro);
+    }
 
+    [HttpGet]
+    public async Task<IActionResult> GetLivros(CancellationToken cancellationToken)
+    {
+        var result = await _sender.Send(new ObterLivrosQuery(), cancellationToken);
 
+        return Ok(result);
     }
 
     [HttpPut("{id}")]
-    public IActionResult UpdateLivro(int id,
-        [FromBody] UpdateLivroDto updateLivroDto)
+    public async Task<IActionResult> UpdateLivro(int id,[FromBody] AtualizarLivroCommand command,CancellationToken cancellationToken)
     {
-        try
-        {
-            bool atualiza = _livrosService.UpdateLivro(id, updateLivroDto);
+        var commandComId = command with { Id = id };
 
-            if (!atualiza)
-            {
-                return NotFound();
-            }
+        var atualizado = await _sender.Send(
+            commandComId,
+            cancellationToken);
 
-            return NoContent();
-
-        }
-        catch (CategoriaNaoEncontradaException ex)
-        {
-            return NotFound(new
-            {
-                message = ex.Message
-            });
-        }
-    } 
-    [HttpDelete("{id}")]
-    public IActionResult DeleteLivro(int id)
-    {
-        bool remove = _livrosService.DeleteLivro(id);
-
-        if (!remove)
-        {
+        if (!atualizado)
             return NotFound();
-        }
+
+        return NoContent();
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteLivro(int id,CancellationToken cancellationToken)
+    {
+        var removido = await _sender.Send(new ExcluirLivroCommand(id),cancellationToken);
+
+        if (!removido)
+            return NotFound();
 
         return NoContent();
     }

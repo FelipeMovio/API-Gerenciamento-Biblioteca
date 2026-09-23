@@ -1,3 +1,6 @@
 <Solution>
-  <Project Path="Biblioteca/Biblioteca.csproj" />
+  <Project Path="Biblioteca.Application/Biblioteca.Application.csproj" Id="04f5bf54-b67d-4d22-97ef-88b066a4777b" />
+  <Project Path="Biblioteca.Domain/Biblioteca.Domain.csproj" Id="c2c18c6f-90b0-42a5-9368-59ce8289f379" />
+  <Project Path="Biblioteca.Infrastructure/Biblioteca.Infrastructure.csproj" Id="a758a540-f397-4ec4-8d0b-205b057ab6cd" />
+  <Project Path="Biblioteca/Biblioteca.Api.csproj" />
 </Solution>

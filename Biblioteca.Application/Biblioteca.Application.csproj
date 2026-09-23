@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Modulos\CategoriaOps\Commands\" />
+    <Folder Include="Modulos\CategoriaOps\Queries\" />
+    <Folder Include="Modulos\EmprestimoOps\Commands\" />
+    <Folder Include="Modulos\EmprestimoOps\Queries\" />
+    <Folder Include="Modulos\UsuarioOps\Commands\" />
+    <Folder Include="Modulos\UsuarioOps\Queries\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="12.1.1" />
+    <PackageReference Include="MediatR" Version="14.2.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.12" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Biblioteca.Domain\Biblioteca.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

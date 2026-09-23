@@ -1,0 +1,30 @@
+﻿using Biblioteca.Domain.Models.LivroMod;
+using Biblioteca.Domain.Models.UsuarioMod;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Biblioteca.Domain.Models.EmprestimoMod;
+
+public class Emprestimo
+{
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public int Id { get; set; }
+
+    [Range(1, int.MaxValue)]
+    public int LivroId { get; set; }
+
+    [Range(1, int.MaxValue)]
+    public int UsuarioId { get; set; }
+
+    public DateTime DataEmprestimo { get; set; }
+
+    public DateTime DataDevolucaoPrevista { get; set; }
+
+    public DateTime? DataDevolucao { get; set; }
+
+    // Navegação
+    public virtual Livro? Livro { get; set; }
+
+    public virtual Usuario? Usuario { get; set; }
+}

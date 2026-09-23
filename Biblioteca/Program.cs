@@ -1,30 +1,26 @@
-using Biblioteca.Data;
-using Biblioteca.Services;
-using Microsoft.EntityFrameworkCore;
+using Biblioteca;
+using Biblioteca.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Infrastructure
+builder.Services.AddInfrastructureDI(builder.Configuration);
 
-var connectionString = builder.Configuration.GetConnectionString("BibliotecaConnection");
+// Application
+builder.Services.AddAppDI();
 
-builder.Services.AddDbContext<AppDbContext>(opts =>
-    opts.UseLazyLoadingProxies().UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+builder.Services.AddAutoMapper(
+    AppDomain.CurrentDomain.GetAssemblies());
 
-builder.Services.AddScoped<LivrosService>();
+builder.Services
+    .AddControllers()
+    .AddNewtonsoftJson();
 
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
-builder.Services.AddControllers().AddNewtonsoftJson();
-
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
