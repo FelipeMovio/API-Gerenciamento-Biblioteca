@@ -1,5 +1,4 @@
-﻿
-using Biblioteca.Application.Modules.LivroOps.Commands;
+﻿using Biblioteca.Application.Modules.LivroOps.Commands;
 using Biblioteca.Application.Modules.LivroOps.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -48,6 +47,21 @@ public class LivrosController : ControllerBase
         var result = await _sender.Send(new ObterLivrosQuery(), cancellationToken);
 
         return Ok(result);
+    }
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> UpdateLivro(int id,[FromBody] AtualizarLivroCommand command,CancellationToken cancellationToken)
+    {
+        var commandComId = command with { Id = id };
+
+        var atualizado = await _sender.Send(
+            commandComId,
+            cancellationToken);
+
+        if (!atualizado)
+            return NotFound();
+
+        return NoContent();
     }
 
 }
