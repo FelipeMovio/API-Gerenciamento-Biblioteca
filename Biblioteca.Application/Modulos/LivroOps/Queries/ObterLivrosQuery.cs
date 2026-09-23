@@ -1,5 +1,4 @@
-﻿using Biblioteca.Domain._Core.Base;
-using Biblioteca.Domain.Models.LivroMod;
+﻿using Biblioteca.Domain.Models.LivroMod;
 using FluentValidation;
 using MediatR;
 

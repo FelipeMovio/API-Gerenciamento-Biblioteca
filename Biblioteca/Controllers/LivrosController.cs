@@ -41,4 +41,13 @@ public class LivrosController : ControllerBase
 
         return Ok(livro);
     }
+
+    [HttpGet]
+    public async Task<IActionResult> GetLivros(CancellationToken cancellationToken)
+    {
+        var result = await _sender.Send(new ObterLivrosQuery(), cancellationToken);
+
+        return Ok(result);
+    }
+
 }
