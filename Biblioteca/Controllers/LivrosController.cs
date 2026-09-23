@@ -64,4 +64,14 @@ public class LivrosController : ControllerBase
         return NoContent();
     }
 
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteLivro(int id,CancellationToken cancellationToken)
+    {
+        var removido = await _sender.Send(new ExcluirLivroCommand(id),cancellationToken);
+
+        if (!removido)
+            return NotFound();
+
+        return NoContent();
+    }
 }

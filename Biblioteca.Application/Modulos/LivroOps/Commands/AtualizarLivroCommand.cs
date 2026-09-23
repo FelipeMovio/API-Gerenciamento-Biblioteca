@@ -1,6 +1,6 @@
 ﻿using Biblioteca.Domain._Core.Base;
+using Biblioteca.Domain.Models.CategoriaMod;
 using Biblioteca.Domain.Models.LivroMod;
-using Biblioteca.Infrastructure.Modulos.CategoriaDb;
 using FluentValidation;
 using MediatR;
 
