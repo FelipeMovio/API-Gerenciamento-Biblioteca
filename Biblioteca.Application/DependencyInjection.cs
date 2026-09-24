@@ -1,16 +1,21 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FluentValidation;
+using MediatR;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Biblioteca.Application;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddApplicationDI(this IServiceCollection service)
+    public static IServiceCollection AddApplicationDI(
+        this IServiceCollection services)
     {
-        return service;
+        services.AddMediatR(cfg =>
+            cfg.RegisterServicesFromAssembly(
+                typeof(DependencyInjection).Assembly));
+
+        services.AddValidatorsFromAssembly(
+            typeof(DependencyInjection).Assembly);
+
+        return services;
     }
 }

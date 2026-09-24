@@ -20,7 +20,7 @@ public class Usuario
     public string Email { get; set; } = string.Empty;
 
     [Required]
-    public string Password { get; set; } = string.Empty;
+    public string PasswordHash { get; set; } = string.Empty;
 
     public DateTime DataCadastro { get; set; } = DateTime.UtcNow;
 
