@@ -1,6 +1,6 @@
 ﻿
 
-namespace Biblioteca.Infrastructure.Notifications;
+namespace Biblioteca.Application.Notifications;
 
 public interface IEmailService
 {

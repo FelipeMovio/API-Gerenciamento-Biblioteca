@@ -1,6 +1,7 @@
 ﻿using MailKit.Net.Smtp;
 using Microsoft.Extensions.Configuration;
 using MimeKit;
+using Biblioteca.Application.Notifications;
 
 namespace Biblioteca.Infrastructure.Notifications;
 

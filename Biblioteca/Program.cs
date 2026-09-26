@@ -12,6 +12,8 @@ builder.Services.AddInfrastructureDI(builder.Configuration);
 // Application
 builder.Services.AddAppDI();
 
+builder.Services.AddMemoryCache();
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {

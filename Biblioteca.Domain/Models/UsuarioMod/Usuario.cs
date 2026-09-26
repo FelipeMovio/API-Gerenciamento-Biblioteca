@@ -19,6 +19,8 @@ public class Usuario
     [StringLength(200)]
     public string Email { get; set; } = string.Empty;
 
+    public bool EmailConfirmado { get; set; } = false;
+
     [Required]
     public string PasswordHash { get; set; } = string.Empty;
 
