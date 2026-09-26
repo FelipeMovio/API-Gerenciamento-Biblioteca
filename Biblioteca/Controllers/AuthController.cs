@@ -20,4 +20,22 @@ public class AuthController(ISender sender) : ControllerBase
             new { id = usuario.Id },
             usuario);
     }
+
+    [HttpPost("login")]
+    public async Task<IActionResult> Login(
+    [FromBody] LoginUsuarioCommand command,
+    CancellationToken cancellationToken)
+    {
+        var usuario = await sender.Send(
+            command,
+            cancellationToken);
+
+        if (usuario is null)
+            return Unauthorized(new
+            {
+                message = "E-mail ou senha inválidos."
+            });
+
+        return Ok(usuario);
+    }
 }
