@@ -4,3 +4,13 @@ GET {{Biblioteca_HostAddress}}/weatherforecast/
 Accept: application/json
 
 ###
+POST {{Biblioteca_HostAddress}}/api/Auth/register
+Content-Type: application/json
+
+{
+  "nome": "Felipe",
+  "email": "felipe@email.com",
+  "password": "MinhaSenha123"
+}
+
+###

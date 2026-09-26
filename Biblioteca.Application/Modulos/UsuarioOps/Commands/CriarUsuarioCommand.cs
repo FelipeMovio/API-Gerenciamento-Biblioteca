@@ -9,8 +9,7 @@ namespace Biblioteca.Application.Modules.UsuarioOps.Commands;
 public sealed record CriarUsuarioCommand(
     string Nome,
     string Email,
-    string Password)
-    : IRequest<CriarUsuarioCommand.Response>
+    string Password) : IRequest<CriarUsuarioCommand.Response>
 {
     public sealed class Handler(
         IUsuarioRepository usuarioRepository,
