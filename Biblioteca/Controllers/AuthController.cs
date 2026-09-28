@@ -21,6 +21,21 @@ public class AuthController(ISender sender) : ControllerBase
             usuario);
     }
 
+    [HttpPost("enviar-codigo")]
+    public async Task<IActionResult> EnviarCodigo(
+    [FromBody] EnviarCodigoEmailCommand command,
+    CancellationToken cancellationToken)
+    {
+        var resultado = await sender.Send(
+            command,
+            cancellationToken);
+
+        if (!resultado.Success)
+            return BadRequest(resultado);
+
+        return Ok(resultado);
+    }
+
     [HttpPost("login")]
     public async Task<IActionResult> Login(
     [FromBody] LoginUsuarioCommand command,

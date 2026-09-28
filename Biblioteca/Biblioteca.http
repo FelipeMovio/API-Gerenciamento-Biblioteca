@@ -1,32 +1,44 @@
- @Biblioteca_HostAddress = http://localhost:5180
+@Biblioteca_HostAddress = http://localhost:5180
 
 GET {{Biblioteca_HostAddress}}/weatherforecast/
 Accept: application/json
 
 ###
+
 POST {{Biblioteca_HostAddress}}/api/Auth/register
 Content-Type: application/json
 
 {
   "nome": "Felipe",
-  "email": "felipe@email.com",
+  "email": "felipelsmovio@gmail.com",
   "password": "MinhaSenha123"
 }
 
 ###
+
+POST {{Biblioteca_HostAddress}}/api/Auth/enviar-codigo
+Content-Type: application/json
+
+{
+  "email": "felipelsmovio@gmail.com"
+}
+
 ###
+
 POST {{Biblioteca_HostAddress}}/api/Auth/login
 Content-Type: application/json
 
 {
-  "email": "felipe@email.com",
+  "email": "felipelsmovio@gmail.com",
   "password": "MinhaSenha123"
 }
 
 
 ###
+
 POST {{Biblioteca_HostAddress}}/api/Auth/login
 Content-Type: application/json
+
 {
   "email": "naoexiste@email.com",
   "password": "MinhaSenha123"

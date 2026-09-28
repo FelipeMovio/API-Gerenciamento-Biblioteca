@@ -7,26 +7,17 @@ namespace Biblioteca.Infrastructure.Notifications;
 
 public class EmailService(IConfiguration configuration) : IEmailService
 {
-    public async Task EnviarEmailAsync(
-        string destinatario,
-        string assunto,
-        string mensagem)
+    public async Task EnviarEmailAsync( string destinatario, string assunto,string mensagem)
     {
-        var emailRemetente =
-            configuration["Email:Address"];
+        var emailRemetente = configuration["Email:Address"];
 
-        var senhaEmail =
-            configuration["Email:Password"];
+        var senhaEmail = configuration["Email:Password"];
 
         var email = new MimeMessage();
 
-        email.From.Add(
-            new MailboxAddress(
-                "Biblioteca API",
-                emailRemetente));
+        email.From.Add( new MailboxAddress("Biblioteca API", emailRemetente));
 
-        email.To.Add(
-            MailboxAddress.Parse(destinatario));
+        email.To.Add( MailboxAddress.Parse(destinatario));
 
         email.Subject = assunto;
 
