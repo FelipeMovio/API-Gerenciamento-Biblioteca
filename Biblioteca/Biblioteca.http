@@ -9,8 +9,8 @@ POST {{Biblioteca_HostAddress}}/api/Auth/register
 Content-Type: application/json
 
 {
-  "nome": "Felipe",
-  "email": "felipelsmovio@gmail.com",
+  "nome": "David",
+  "email": "David111@email.com",
   "password": "MinhaSenha123"
 }
 
