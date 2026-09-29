@@ -1,4 +1,5 @@
-﻿using Biblioteca.Domain.Models.UsuarioMod;
+﻿using Biblioteca.Application.Security;
+using Biblioteca.Domain.Models.UsuarioMod;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
@@ -12,7 +13,8 @@ public sealed record LoginUsuarioCommand(
 {
     public sealed class Handler(
         IUsuarioRepository usuarioRepository,
-        IPasswordHasher<Usuario> passwordHasher)
+        IPasswordHasher<Usuario> passwordHasher,
+        IJwtService jwtService)
         : IRequestHandler<LoginUsuarioCommand, Response?>
     {
         public async Task<Response?> Handle(
@@ -30,7 +32,6 @@ public sealed record LoginUsuarioCommand(
             {
                 return null;
             }
-              
 
             var resultado = passwordHasher.VerifyHashedPassword(
                 usuario,
@@ -47,17 +48,20 @@ public sealed record LoginUsuarioCommand(
                 return null;
             }
 
+            string token = jwtService.GerarToken(
+                usuario.Id, usuario.Nome, usuario.Email);
+
             return new Response(
-                usuario.Id,
-                usuario.Nome,
-                usuario.Email);
+                usuario.Id, usuario.Nome,
+                usuario.Email,token);
         }
     }
 
     public sealed record Response(
         int Id,
         string Nome,
-        string Email);
+        string Email,
+        string Token);
 
     public sealed class Validator
         : AbstractValidator<LoginUsuarioCommand>
