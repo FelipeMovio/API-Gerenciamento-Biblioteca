@@ -7,19 +7,15 @@ using System.Text;
 
 namespace Biblioteca.Infrastructure.Security;
 
-public class JwtService(IConfiguration configuration)
-    : IJwtService
+public class JwtService(IConfiguration configuration) : IJwtService
 {
-    public string GerarToken(
-        int usuarioId,
-        string nome,
-        string email)
+    public string GerarToken(int usuarioId,string nome,string email)
     {
-        var jwtKey = configuration["Jwt:Key"];
-        var jwtIssuer = configuration["Jwt:Issuer"];
-        var jwtAudience = configuration["Jwt:Audience"];
+        string? jwtKey = configuration["Jwt:Key"];
+        string? jwtIssuer = configuration["Jwt:Issuer"];
+        string? jwtAudience = configuration["Jwt:Audience"];
 
-        var claims = new[]
+        Claim[] claims = new[]
         {
             new Claim(
                 JwtRegisteredClaimNames.Sub,

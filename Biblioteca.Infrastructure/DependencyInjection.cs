@@ -49,7 +49,9 @@ public static class DependencyInjection
         services.AddScoped<ICategoriaRepository, CategoriaRepository>();
         services.AddScoped<ILivroRepository, LivroRepository>();
         services.AddScoped<IUsuarioRepository, UsuarioRepository>();
-
+        services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+        services.AddScoped<IPasswordHasher<Usuario>, PasswordHasher<Usuario>>();
+        services.AddScoped<IEmailService, EmailService>();
 
         return services;
     }
