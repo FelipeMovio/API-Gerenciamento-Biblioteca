@@ -36,6 +36,21 @@ public class AuthController(ISender sender) : ControllerBase
         return Ok(resultado);
     }
 
+    [HttpPost("verificar-email")]
+    public async Task<IActionResult> VerificarEmail(
+    [FromBody] VerificarEmailCommand command,
+    CancellationToken cancellationToken)
+    {
+        var resultado = await sender.Send(
+            command,
+            cancellationToken);
+
+        if (!resultado.Success)
+            return BadRequest(resultado);
+
+        return Ok(resultado);
+    }
+
     [HttpPost("login")]
     public async Task<IActionResult> Login(
     [FromBody] LoginUsuarioCommand command,

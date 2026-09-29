@@ -83,7 +83,7 @@ public sealed record EnviarCodigoEmailCommand(
     public sealed record Response(
         bool Success,
         string Message,
-        string? TransacaoId);
+        string? Id);
 
     public sealed class Validator
         : AbstractValidator<EnviarCodigoEmailCommand>
