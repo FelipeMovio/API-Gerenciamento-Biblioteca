@@ -27,7 +27,10 @@ public sealed record LoginUsuarioCommand(
                 cancellationToken);
 
             if (usuario is null)
+            {
                 return null;
+            }
+              
 
             var resultado = passwordHasher.VerifyHashedPassword(
                 usuario,
@@ -35,7 +38,14 @@ public sealed record LoginUsuarioCommand(
                 request.Password);
 
             if (resultado == PasswordVerificationResult.Failed)
+            {
                 return null;
+            }
+
+            if(!usuario.EmailConfirmado)
+            {
+                return null;
+            }
 
             return new Response(
                 usuario.Id,
