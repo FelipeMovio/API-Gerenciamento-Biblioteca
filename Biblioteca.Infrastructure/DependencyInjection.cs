@@ -1,4 +1,5 @@
 ﻿using Biblioteca.Application.Notifications;
+using Biblioteca.Application.Security;
 using Biblioteca.Domain._Core.Base;
 using Biblioteca.Domain.Models.CategoriaMod;
 using Biblioteca.Domain.Models.LivroMod;
@@ -9,6 +10,7 @@ using Biblioteca.Infrastructure.Modulos.CategoriaDb;
 using Biblioteca.Infrastructure.Modulos.LivroDb;
 using Biblioteca.Infrastructure.Modulos.UsuarioDb;
 using Biblioteca.Infrastructure.Notifications;
+using Biblioteca.Infrastructure.Security;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -36,6 +38,7 @@ public static class DependencyInjection
 
         services.AddScoped<IPasswordHasher<Usuario>, PasswordHasher<Usuario>>();
         services.AddScoped<IEmailService, EmailService>();
+        services.AddScoped<IJwtService, JwtService>();
 
 
         // Unit of Work
@@ -49,9 +52,6 @@ public static class DependencyInjection
         services.AddScoped<ICategoriaRepository, CategoriaRepository>();
         services.AddScoped<ILivroRepository, LivroRepository>();
         services.AddScoped<IUsuarioRepository, UsuarioRepository>();
-        services.AddScoped<IUsuarioRepository, UsuarioRepository>();
-        services.AddScoped<IPasswordHasher<Usuario>, PasswordHasher<Usuario>>();
-        services.AddScoped<IEmailService, EmailService>();
 
         return services;
     }
