@@ -37,6 +37,36 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
             ClockSkew = TimeSpan.Zero
         };
+        options.Events = new JwtBearerEvents
+        {
+            OnMessageReceived = context =>
+            {
+                Console.WriteLine(
+                    $"AUTHORIZATION HEADER: " +
+                    $"{context.Request.Headers.Authorization}");
+
+                Console.WriteLine(
+                    $"TOKEN RECEBIDO: {context.Token}");
+
+                return Task.CompletedTask;
+            },
+
+            OnAuthenticationFailed = context =>
+            {
+                Console.WriteLine(
+                    $"JWT INVÁLIDO: {context.Exception.Message}");
+
+                return Task.CompletedTask;
+            },
+
+            OnChallenge = context =>
+            {
+                Console.WriteLine(
+                    $"JWT CHALLENGE: {context.Error} - {context.ErrorDescription}");
+
+                return Task.CompletedTask;
+            }
+        };
     });
 
 builder.Services.AddAutoMapper(

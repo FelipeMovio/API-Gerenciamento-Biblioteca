@@ -42,3 +42,12 @@ Content-Type: application/json
   "email": "felipelsmovio@gmail.com",
   "password": "MinhaSenha123"
 }
+
+###
+
+GET {{Biblioteca_HostAddress}}/api/teste-auth/protegido
+
+###
+
+GET {{Biblioteca_HostAddress}}/api/teste-auth/protegido
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyIiwibmFtZSI6IkZlbGlwZSIsImVtYWlsIjoiZmVsaXBlbHNtb3Zpb0BnbWFpbC5jb20iLCJleHAiOjE3OTA4MTAwOTksImlzcyI6IkJpYmxpb3RlY2EuQVBJIiwiYXVkIjoiQmlibGlvdGVjYS5BUEkifQ.e69L2FXQXfFiFxIaUAd7qp1BM2y31xwHu5Kv8znRMQs
