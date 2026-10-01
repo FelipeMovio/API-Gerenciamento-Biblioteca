@@ -1,4 +1,5 @@
 ﻿using Biblioteca.Domain.Models.EmprestimoMod;
+using Biblioteca.Domain.Models.UsuarioMod.Enum;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -23,6 +24,8 @@ public class Usuario
 
     [Required]
     public string PasswordHash { get; set; } = string.Empty;
+
+    public TipoUsuario Tipo { get; set; } = TipoUsuario.Cliente;
 
     public DateTime DataCadastro { get; set; } = DateTime.UtcNow;
 
