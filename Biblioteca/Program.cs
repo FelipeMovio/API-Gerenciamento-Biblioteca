@@ -1,3 +1,4 @@
+
 using Biblioteca;
 using Biblioteca.Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -14,13 +15,15 @@ builder.Services.AddAppDI();
 
 builder.Services.AddMemoryCache();
 
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+builder.Services
+    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
         var jwtKey = builder.Configuration["Jwt:Key"];
         var jwtIssuer = builder.Configuration["Jwt:Issuer"];
         var jwtAudience = builder.Configuration["Jwt:Audience"];
 
+        options.MapInboundClaims = false;
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuerSigningKey = true,
@@ -34,23 +37,15 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidAudience = jwtAudience,
 
             ValidateLifetime = true,
+            ClockSkew = TimeSpan.Zero,
 
-            ClockSkew = TimeSpan.Zero
+            NameClaimType = "name"
         };
+
+        // Eventos temporários para diagnóstico.
+        // Não registre o token completo nos logs.
         options.Events = new JwtBearerEvents
         {
-            OnMessageReceived = context =>
-            {
-                Console.WriteLine(
-                    $"AUTHORIZATION HEADER: " +
-                    $"{context.Request.Headers.Authorization}");
-
-                Console.WriteLine(
-                    $"TOKEN RECEBIDO: {context.Token}");
-
-                return Task.CompletedTask;
-            },
-
             OnAuthenticationFailed = context =>
             {
                 Console.WriteLine(

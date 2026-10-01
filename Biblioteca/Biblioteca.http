@@ -1,4 +1,4 @@
-@Biblioteca_HostAddress = http://localhost:5180
+@Biblioteca_HostAddress = https://localhost:7075
 
 GET {{Biblioteca_HostAddress}}/weatherforecast/
 Accept: application/json
@@ -45,9 +45,10 @@ Content-Type: application/json
 
 ###
 
-GET {{Biblioteca_HostAddress}}/api/teste-auth/protegido
+GET {{Biblioteca_HostAddress}}/api/teste-auth/publico
 
 ###
-
+###
 GET {{Biblioteca_HostAddress}}/api/teste-auth/protegido
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyIiwibmFtZSI6IkZlbGlwZSIsImVtYWlsIjoiZmVsaXBlbHNtb3Zpb0BnbWFpbC5jb20iLCJleHAiOjE3OTA4MTAwOTksImlzcyI6IkJpYmxpb3RlY2EuQVBJIiwiYXVkIjoiQmlibGlvdGVjYS5BUEkifQ.e69L2FXQXfFiFxIaUAd7qp1BM2y31xwHu5Kv8znRMQs
+Accept: application/json
+Authorization: Bearerey JhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyIiwibmFtZSI6IkZlbGlwZSIsImVtYWlsIjoiZmVsaXBlbHNtb3Zpb0BnbWFpbC5jb20iLCJleHAiOjE3OTA4NjgzMjMsImlzcyI6IkJpYmxpb3RlY2EuQVBJIiwiYXVkIjoiQmlibGlvdGVjYS5BUEkifQ.P4Q0ahZHlknAfmeJZKTpC8wUvXY3KgsXB69izPKDIuc
