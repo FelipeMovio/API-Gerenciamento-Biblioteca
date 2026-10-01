@@ -1,4 +1,6 @@
-﻿namespace Biblioteca.Application.Security;
+﻿using Biblioteca.Domain.Models.UsuarioMod.Enum;
+
+namespace Biblioteca.Application.Security;
 
 public interface IJwtService
 {
@@ -6,5 +8,5 @@ public interface IJwtService
         int usuarioId,
         string nome,
         string email,
-        string tipo);
+        TipoUsuario tipo);
 }

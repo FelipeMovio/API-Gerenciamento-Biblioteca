@@ -1,5 +1,6 @@
 ﻿
 using Biblioteca.Application.Security;
+using Biblioteca.Domain.Models.UsuarioMod.Enum;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -14,7 +15,7 @@ public class JwtService(IConfiguration configuration) : IJwtService
         int usuarioId,
         string nome,
         string email,
-        string tipo)
+        TipoUsuario tipo)
     {
         string? jwtKey = configuration["Jwt:Key"];
         string? jwtIssuer = configuration["Jwt:Issuer"];
@@ -36,7 +37,7 @@ public class JwtService(IConfiguration configuration) : IJwtService
 
             new Claim(
                 ClaimTypes.Role,
-                tipo)
+                tipo.ToString())
         ];
 
         var chave = new SymmetricSecurityKey(
@@ -52,7 +53,7 @@ public class JwtService(IConfiguration configuration) : IJwtService
             claims: claims,
             expires: DateTime.UtcNow.AddHours(2),
             signingCredentials: credenciais);
-
+         
         return new JwtSecurityTokenHandler()
             .WriteToken(token);
     }

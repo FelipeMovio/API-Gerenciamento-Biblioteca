@@ -1,5 +1,6 @@
 ﻿using Biblioteca.Application.Security;
 using Biblioteca.Domain.Models.UsuarioMod;
+using Biblioteca.Domain.Models.UsuarioMod.Enum;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
@@ -49,11 +50,11 @@ public sealed record LoginUsuarioCommand(
             }
 
             string token = jwtService.GerarToken(
-                usuario.Id, usuario.Nome, usuario.Email);
+                usuario.Id, usuario.Nome, usuario.Email,usuario.Tipo);
 
             return new Response(
                 usuario.Id, usuario.Nome,
-                usuario.Email,token);
+                usuario.Email,usuario.Tipo,token);
         }
     }
 
@@ -61,6 +62,7 @@ public sealed record LoginUsuarioCommand(
         int Id,
         string Nome,
         string Email,
+        TipoUsuario Tipo,
         string Token);
 
     public sealed class Validator

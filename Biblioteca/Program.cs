@@ -3,6 +3,7 @@ using Biblioteca;
 using Biblioteca.Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -39,7 +40,8 @@ builder.Services
             ValidateLifetime = true,
             ClockSkew = TimeSpan.Zero,
 
-            NameClaimType = "name"
+            NameClaimType = "name",
+            RoleClaimType = ClaimTypes.Role
         };
 
         // Eventos temporários para diagnóstico.
