@@ -1,4 +1,5 @@
-﻿using Biblioteca.Application.Security;
+﻿
+using Biblioteca.Application.Security;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -9,14 +10,18 @@ namespace Biblioteca.Infrastructure.Security;
 
 public class JwtService(IConfiguration configuration) : IJwtService
 {
-    public string GerarToken(int usuarioId,string nome,string email)
+    public string GerarToken(
+        int usuarioId,
+        string nome,
+        string email,
+        string tipo)
     {
         string? jwtKey = configuration["Jwt:Key"];
         string? jwtIssuer = configuration["Jwt:Issuer"];
         string? jwtAudience = configuration["Jwt:Audience"];
 
-        Claim[] claims = new[]
-        {
+        Claim[] claims =
+        [
             new Claim(
                 JwtRegisteredClaimNames.Sub,
                 usuarioId.ToString()),
@@ -27,8 +32,12 @@ public class JwtService(IConfiguration configuration) : IJwtService
 
             new Claim(
                 JwtRegisteredClaimNames.Email,
-                email)
-        };
+                email),
+
+            new Claim(
+                ClaimTypes.Role,
+                tipo)
+        ];
 
         var chave = new SymmetricSecurityKey(
             Encoding.UTF8.GetBytes(jwtKey!));
