@@ -30,7 +30,7 @@ public class LivrosController : ControllerBase
         return CreatedAtAction(
             nameof(GetLivroById),
             new { id = livro.Id },
-            livro); ;
+            livro); 
     }
 
     [HttpGet("{id}")]

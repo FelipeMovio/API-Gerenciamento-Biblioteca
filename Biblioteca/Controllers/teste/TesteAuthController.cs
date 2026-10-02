@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Biblioteca.API.Controllers;
+namespace Biblioteca.Api.Controllers.teste;
 
 [ApiController]
 [Route("api/teste-auth")]
