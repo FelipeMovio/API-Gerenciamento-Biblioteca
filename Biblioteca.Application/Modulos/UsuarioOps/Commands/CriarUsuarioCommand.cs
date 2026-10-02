@@ -1,4 +1,5 @@
-﻿using Biblioteca.Domain._Core.Base;
+﻿
+using Biblioteca.Domain._Core.Base;
 using Biblioteca.Domain.Models.UsuarioMod;
 using FluentValidation;
 using MediatR;
@@ -21,23 +22,25 @@ public sealed record CriarUsuarioCommand(
             CriarUsuarioCommand request,
             CancellationToken cancellationToken)
         {
+            var email = request.Email.Trim().ToLowerInvariant();
+
             var emailJaExiste = await usuarioRepository.ExisteAsync(
-                usuario => usuario.Email == request.Email,
+                usuario => usuario.Email == email,
                 cancellationToken);
 
             if (emailJaExiste)
                 throw new InvalidOperationException(
                     "Já existe um usuário cadastrado com este e-mail.");
 
-            var usuario = new Usuario
-            {
-                Nome = request.Nome.Trim(),
-                Email = request.Email.Trim().ToLowerInvariant()
-            };
+            var usuario = new Usuario(
+                request.Nome.Trim(),
+                email);
 
-            usuario.PasswordHash = passwordHasher.HashPassword(
+            var passwordHash = passwordHasher.HashPassword(
                 usuario,
                 request.Password);
+
+            usuario.DefinirPasswordHash(passwordHash);
 
             usuarioRepository.Adicionar(usuario);
 

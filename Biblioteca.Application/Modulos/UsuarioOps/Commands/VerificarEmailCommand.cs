@@ -68,7 +68,7 @@ public sealed record VerificarEmailCommand(
             }
 
             // Confirma o e-mail.
-            usuario.EmailConfirmado = true;
+            usuario.ConfirmarEmail();
 
             usuarioRepository.Atualizar(usuario);
 
