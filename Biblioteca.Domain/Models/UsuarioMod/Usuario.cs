@@ -74,7 +74,13 @@ public class Usuario
         if (string.IsNullOrWhiteSpace(email))
             throw new ArgumentException("O e-mail é obrigatório.");
 
-        Email = email.Trim().ToLowerInvariant();
+        email = email.Trim().ToLowerInvariant();
+
+        if (Email != email)
+        {
+            Email = email;
+            EmailConfirmado = false;
+        }
     }
 
     public void AlterarSenha(string passwordHash)
