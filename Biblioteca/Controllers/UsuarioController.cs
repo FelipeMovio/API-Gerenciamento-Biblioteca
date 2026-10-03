@@ -29,4 +29,21 @@ public class UsuarioController : ControllerBase
 
         return Ok(usuarios);
     }
+
+
+    [HttpGet("{id}")]
+    [Authorize(Roles = "Administrador")]
+    public async Task<IActionResult> GetUsuarioPorId(
+    int id,
+    CancellationToken cancellationToken)
+    {
+        var usuario = await _sender.Send(
+            new ObterUsuarioPorIdQuery(id),
+            cancellationToken);
+
+        if (usuario is null)
+            return NotFound();
+
+        return Ok(usuario);
+    }
 }
