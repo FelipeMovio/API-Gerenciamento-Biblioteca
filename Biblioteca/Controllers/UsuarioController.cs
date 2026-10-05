@@ -1,7 +1,7 @@
-﻿using MediatR;
+﻿using Biblioteca.Application.Modules.UsuarioOps.Queries;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 namespace Biblioteca.Api.Controllers;
 
@@ -19,18 +19,22 @@ public class UsuarioController : ControllerBase
     }
 
     [HttpGet("me")]
-    public IActionResult MeuPerfil()
+    public async Task<IActionResult> MeuPerfil(
+        CancellationToken cancellationToken)
     {
         var usuarioId = User.FindFirst("sub")?.Value;
-        var email = User.FindFirst("email")?.Value;
-        var nome = User.FindFirst("name")?.Value;
 
-        return Ok(new
-        {
-            Id = usuarioId,
-            Nome = nome,
-            Email = email
-        });
+        if (!int.TryParse(usuarioId, out var id))
+            return Unauthorized();
+
+        var usuario = await _sender.Send(
+            new ObterUsuarioPorIdQuery(id),
+            cancellationToken);
+
+        if (usuario is null)
+            return NotFound();
+
+        return Ok(usuario);
     }
 }
 
