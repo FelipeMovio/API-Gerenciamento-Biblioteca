@@ -9,12 +9,12 @@ namespace Biblioteca.Api.Controllers;
 [ApiController]
 [Route("api/[controller]/usuario")]
 [Authorize]
-public class AdiminController : ControllerBase
+public class AdminController : ControllerBase
 {
 
     private readonly ISender _sender;
 
-    public AdiminController(ISender sender)
+    public AdminController(ISender sender)
     {
         _sender = sender;
     }
