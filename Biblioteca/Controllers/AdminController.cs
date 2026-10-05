@@ -7,14 +7,14 @@ using Microsoft.AspNetCore.Mvc;
 namespace Biblioteca.Api.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/[controller]/usuario")]
 [Authorize]
-public class UsuarioController : ControllerBase
+public class AdiminController : ControllerBase
 {
 
     private readonly ISender _sender;
 
-    public UsuarioController(ISender sender)
+    public AdiminController(ISender sender)
     {
         _sender = sender;
     }
