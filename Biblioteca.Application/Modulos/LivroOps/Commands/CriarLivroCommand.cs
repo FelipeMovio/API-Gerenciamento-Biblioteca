@@ -33,26 +33,18 @@ public sealed record CriarLivroCommand(
                 throw new Exception(
                     $"A categoria com ID {request.CategoriaId} não foi encontrada.");
 
-            string titulo = request.Titulo.Trim();
-            string autor = request.Autor.Trim();
-            string isbn = request.ISBN.Trim();
-
-            var livro = new Livro
-            {
-                Titulo = titulo,
-                Autor = autor,
-                ISBN = isbn,
-                AnoPublicacao = request.AnoPublicacao,
-                CategoriaId = categoria.Id,
-                Categoria = categoria,
-                Disponivel = true
-            };
+            var livro = new Livro(
+                request.Titulo,
+                request.Autor,
+                request.ISBN,
+                request.AnoPublicacao,
+                categoria.Id);
 
             livroRepository.Adicionar(livro);
 
             await unitOfWork.SaveChangesAsync(cancellationToken);
 
-            return Response.FromEntity(livro);
+            return Response.FromEntity(livro, categoria);
         }
     }
 
@@ -66,7 +58,7 @@ public sealed record CriarLivroCommand(
         bool Disponivel,
         CategoriaResponse Categoria)
     {
-        public static Response FromEntity(Livro livro)
+        public static Response FromEntity(Livro livro, Categoria categoria)
             => new(
                 livro.Id,
                 livro.Titulo,
@@ -76,8 +68,8 @@ public sealed record CriarLivroCommand(
                 livro.CategoriaId,
                 livro.Disponivel,
                 new CategoriaResponse(
-                    livro.CategoriaId,
-                    livro.Categoria?.Nome ?? string.Empty));
+                    categoria.Id,
+                    categoria.Nome));
     }
 
     public sealed record CategoriaResponse(

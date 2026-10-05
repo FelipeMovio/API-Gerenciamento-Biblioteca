@@ -1,12 +1,14 @@
 ﻿using Biblioteca.Application.Modules.LivroOps.Commands;
 using Biblioteca.Application.Modules.LivroOps.Queries;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Biblioteca.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]
 public class LivrosController : ControllerBase
 {
     private readonly ISender _sender;
@@ -17,6 +19,7 @@ public class LivrosController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Roles = "Administrador")]
     public async Task<IActionResult> CreateLivro([FromBody] CriarLivroCommand command,
     CancellationToken cancellationToken)
     {
@@ -27,7 +30,7 @@ public class LivrosController : ControllerBase
         return CreatedAtAction(
             nameof(GetLivroById),
             new { id = livro.Id },
-            livro); ;
+            livro); 
     }
 
     [HttpGet("{id}")]
@@ -50,6 +53,7 @@ public class LivrosController : ControllerBase
     }
 
     [HttpPut("{id}")]
+    [Authorize(Roles = "Administrador")]
     public async Task<IActionResult> UpdateLivro(int id,[FromBody] AtualizarLivroCommand command,CancellationToken cancellationToken)
     {
         var commandComId = command with { Id = id };
@@ -65,6 +69,7 @@ public class LivrosController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [Authorize(Roles = "Administrador")]
     public async Task<IActionResult> DeleteLivro(int id,CancellationToken cancellationToken)
     {
         var removido = await _sender.Send(new ExcluirLivroCommand(id),cancellationToken);

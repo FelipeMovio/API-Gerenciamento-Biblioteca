@@ -41,12 +41,17 @@ public sealed record AtualizarLivroCommand(
                 throw new Exception(
                     $"A categoria com ID {request.CategoriaId} não foi encontrada.");
 
-            livro.Titulo = request.Titulo.Trim();
-            livro.Autor = request.Autor.Trim();
-            livro.ISBN = request.ISBN.Trim();
-            livro.AnoPublicacao = request.AnoPublicacao;
-            livro.CategoriaId = request.CategoriaId;
-            livro.Disponivel = request.Disponivel;
+            livro.AlterarDados(
+                request.Titulo,
+                request.Autor,
+                request.ISBN,
+                request.AnoPublicacao,
+                categoria.Id);
+
+            if (request.Disponivel)
+                livro.MarcarComoDisponivel();
+            else
+                livro.MarcarComoIndisponivel();
 
             livroRepository.Atualizar(livro);
 

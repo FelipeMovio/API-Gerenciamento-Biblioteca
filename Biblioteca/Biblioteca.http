@@ -1,6 +1,54 @@
-@Biblioteca_HostAddress = http://localhost:5180
+@Biblioteca_HostAddress = https://localhost:7075
 
 GET {{Biblioteca_HostAddress}}/weatherforecast/
 Accept: application/json
 
 ###
+
+POST {{Biblioteca_HostAddress}}/api/Auth/register
+Content-Type: application/json
+
+{
+  "nome": "David",
+  "email": "David111@email.com",
+  "password": "MinhaSenha123"
+}
+
+###
+
+POST {{Biblioteca_HostAddress}}/api/Auth/enviar-codigo
+Content-Type: application/json
+
+{
+  "email": "felipelsmovio@gmail.com"
+}
+
+###
+
+###
+POST {{Biblioteca_HostAddress}}/api/Auth/verificar-email
+Content-Type: application/json
+
+{
+  "Id": "f96b8704-eb4c-44b8-b251-abf7cebd07cc",
+  "codigo": "779282"
+}
+
+###
+POST {{Biblioteca_HostAddress}}/api/Auth/login
+Content-Type: application/json
+
+{
+  "email": "felipelsmovio@gmail.com",
+  "password": "MinhaSenha123"
+}
+
+###
+
+GET {{Biblioteca_HostAddress}}/api/teste-auth/publico
+
+###
+###
+GET {{Biblioteca_HostAddress}}/api/teste-auth/protegido
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyIiwibmFtZSI6IkZlbGlwZSIsImVtYWlsIjoiZmVsaXBlbHNtb3Zpb0BnbWFpbC5jb20iLCJleHAiOjE3OTA4NjgzMjMsImlzcyI6IkJpYmxpb3RlY2EuQVBJIiwiYXVkIjoiQmlibGlvdGVjYS5BUEkifQ.P4Q0ahZHlknAfmeJZKTpC8wUvXY3KgsXB69izPKDIuc
