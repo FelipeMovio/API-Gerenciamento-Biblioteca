@@ -2,7 +2,6 @@
 
 namespace Biblioteca.Domain.Models.LivroMod;
 
-public interface ILivroRepository
-    : IBaseRepository<Livro>
+public interface ILivroRepository : IBaseRepository<Livro>
 {
 }
