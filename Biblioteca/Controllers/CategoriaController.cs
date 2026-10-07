@@ -111,4 +111,5 @@ public class CategoriaController : ControllerBase
             _ => StatusCode(StatusCodes.Status500InternalServerError)
         };
     }
+
 }
