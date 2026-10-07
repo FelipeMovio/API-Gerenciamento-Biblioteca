@@ -38,8 +38,4 @@
     <ProjectReference Include="..\Biblioteca.Domain\Biblioteca.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Modulos\EmprestimoDb\" />
-  </ItemGroup>
-
 </Project>

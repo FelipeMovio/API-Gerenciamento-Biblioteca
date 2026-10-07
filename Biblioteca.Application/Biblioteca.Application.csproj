@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Modulos\EmprestimoOps\Commands\" />
     <Folder Include="Modulos\EmprestimoOps\Queries\" />
   </ItemGroup>
 

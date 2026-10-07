@@ -4,17 +4,31 @@ using Biblioteca.Domain.Models.LivroMod;
 using Biblioteca.Domain.Models.UsuarioMod;
 using MediatR;
 
-namespace Biblioteca.Application.Modulos.EmprestimoOps.Commands;
+namespace Biblioteca.Application.Modules.EmprestimoOps.Commands;
 
-public sealed record CriarEmprestimoCommand(
-    int LivroId,
-    int UsuarioId,
-    DateTime DataDevolucaoPrevista) : IRequest<int>
+public sealed record CriarEmprestimoCommand(int LivroId,int UsuarioId,DateTime DataDevolucaoPrevista) : IRequest<CriarEmprestimoCommand.ResultadoCriacao>
 {
     public sealed class Handler(
-    IUsuarioRepository usuarioRepository, 
-    ILivroRepository livroRepository,
-    IEmprestimoRepository emprestimoRepository,
-    IUnitOfWork unitOfWork)
-        : IRequestHandler<CriarEmprestimoCommand, int>
+        IUsuarioRepository usuarioRepository,
+        ILivroRepository livroRepository,
+        IEmprestimoRepository emprestimoRepository,
+        IUnitOfWork unitOfWork)
+        : IRequestHandler<CriarEmprestimoCommand, ResultadoCriacao>
     {
+        public async Task<ResultadoCriacao> Handle(
+            CriarEmprestimoCommand request,
+            CancellationToken cancellationToken)
+        {
+            // Regra de negócio será implementada aqui.
+            throw new NotImplementedException();
+        }
+    }
+
+    public enum ResultadoCriacao
+    {
+        Criado,
+        UsuarioNaoEncontrado,
+        LivroNaoEncontrado,
+        LivroIndisponivel
+    }
+}
