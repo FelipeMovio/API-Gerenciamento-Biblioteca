@@ -1,8 +1,6 @@
-﻿
-
-using Biblioteca.Application.Modules.CategoriaOps.Commands;
-using Biblioteca.Domain._Core.Base;
-using Biblioteca.Domain.Models.CategoriaMod;
+﻿using Biblioteca.Domain._Core.Base;
+using Biblioteca.Domain.Models.EmprestimoMod;
+using Biblioteca.Domain.Models.LivroMod;
 using Biblioteca.Domain.Models.UsuarioMod;
 using MediatR;
 
