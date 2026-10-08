@@ -1,6 +1,7 @@
 ﻿using Biblioteca.Domain._Core.Base;
 using Biblioteca.Domain.Models.EmprestimoMod;
 using Biblioteca.Domain.Models.LivroMod;
+using FluentValidation;
 using MediatR;
 
 namespace Biblioteca.Application.Modules.EmprestimoOps.Commands;
@@ -63,4 +64,14 @@ public sealed record DevolverEmprestimoCommand(
         EmprestimoJaDevolvido,
         LivroNaoEncontrado
     }
-}s
+
+    public sealed class DevolverEmprestimoCommandValidator : AbstractValidator<DevolverEmprestimoCommand>
+    {
+        public DevolverEmprestimoCommandValidator()
+        {
+            RuleFor(x => x.EmprestimoId)
+                .GreaterThan(0)
+                .WithMessage("O ID do empréstimo deve ser maior que zero.");
+        }
+    }
+}
