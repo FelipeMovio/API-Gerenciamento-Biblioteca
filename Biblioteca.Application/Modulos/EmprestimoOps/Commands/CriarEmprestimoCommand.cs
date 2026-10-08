@@ -25,16 +25,19 @@ public sealed record CriarEmprestimoCommand(int LivroId,int UsuarioId,DateTime D
             Usuario? usuario = await usuarioRepository.ObterPorIdAsync(request.UsuarioId,cancellationToken);
             if(usuario == null)
             {
+                return ResultadoCriacao.UsuarioNaoEncontrado;
                 throw new Exception($"Usuario com ID {request.UsuarioId} não foi encontrada.");
             }
 
             Livro? livro = await livroRepository.ObterPorIdAsync(request.LivroId,cancellationToken);
             if (livro == null)
             {
+                return ResultadoCriacao.LivroNaoEncontrado;
                 throw new Exception($"Livro com ID {request.LivroId} não foi encontrada.");
             }
             if (!livro.Disponivel)
             {
+                return ResultadoCriacao.LivroIndisponivel;
                 throw new Exception($"Livro com ID {request.LivroId} não Disponivel.");
             }
             DateTime dataEmprestimo = DateTime.Now;
@@ -45,7 +48,13 @@ public sealed record CriarEmprestimoCommand(int LivroId,int UsuarioId,DateTime D
                 request.UsuarioId,
                 dataEmprestimo,
                 request.DataDevolucaoPrevista);
-                throw new NotImplementedException();
+
+            livro.MarcarComoIndisponivel();
+            emprestimoRepository.Adicionar(emprestimo);
+
+            await unitOfWork.SaveChangesAsync(cancellationToken);
+
+            return ResultadoCriacao.Criado;
         }
     }
 
