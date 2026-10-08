@@ -2,6 +2,7 @@
 using Biblioteca.Domain.Models.EmprestimoMod;
 using Biblioteca.Domain.Models.LivroMod;
 using Biblioteca.Domain.Models.UsuarioMod;
+using FluentValidation;
 using MediatR;
 
 namespace Biblioteca.Application.Modules.EmprestimoOps.Commands;
@@ -59,5 +60,25 @@ public sealed record CriarEmprestimoCommand(int LivroId,int UsuarioId,DateTime D
         UsuarioNaoEncontrado,
         LivroNaoEncontrado,
         LivroIndisponivel
+    }
+
+    public sealed class CriarEmprestimoCommandValidator : AbstractValidator<CriarEmprestimoCommand>
+    {
+        public CriarEmprestimoCommandValidator()
+        {
+            RuleFor(x => x.LivroId)
+                .GreaterThan(0)
+                .WithMessage("O ID do livro deve ser maior que zero.");
+
+            RuleFor(x => x.UsuarioId)
+                .GreaterThan(0)
+                .WithMessage("O ID do usuário deve ser maior que zero.");
+
+            RuleFor(x => x.DataDevolucaoPrevista)
+                .NotEmpty()
+                .WithMessage("A data prevista de devolução é obrigatória.")
+                .GreaterThan(DateTime.UtcNow)
+                .WithMessage("A data prevista de devolução deve ser posterior à data atual.");
+        }
     }
 }
