@@ -1,5 +1,4 @@
 ﻿using Biblioteca.Domain._Core.Base;
-using Biblioteca.Domain.Models.CategoriaMod;
 using Biblioteca.Domain.Models.EmprestimoMod;
 using Biblioteca.Domain.Models.LivroMod;
 using Biblioteca.Domain.Models.UsuarioMod;
@@ -26,22 +25,18 @@ public sealed record CriarEmprestimoCommand(int LivroId,int UsuarioId,DateTime D
             if(usuario == null)
             {
                 return ResultadoCriacao.UsuarioNaoEncontrado;
-                throw new Exception($"Usuario com ID {request.UsuarioId} não foi encontrada.");
             }
 
             Livro? livro = await livroRepository.ObterPorIdAsync(request.LivroId,cancellationToken);
             if (livro == null)
             {
                 return ResultadoCriacao.LivroNaoEncontrado;
-                throw new Exception($"Livro com ID {request.LivroId} não foi encontrada.");
             }
             if (!livro.Disponivel)
             {
                 return ResultadoCriacao.LivroIndisponivel;
-                throw new Exception($"Livro com ID {request.LivroId} não Disponivel.");
             }
-            DateTime dataEmprestimo = DateTime.Now;
-
+            DateTime dataEmprestimo = DateTime.UtcNow;
 
             Emprestimo emprestimo = new(
                 request.LivroId,
