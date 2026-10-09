@@ -1,15 +1,15 @@
 ﻿
 namespace Biblioteca.Domain.Exceptions;
 
-public sealed class LivroIndisponivelException : Exception
+public sealed class EmprestimoJaDevolvidoException : Exception
 {
-    public LivroIndisponivelException()
-        : base("O livro não está disponível para empréstimo.")
+    public EmprestimoJaDevolvidoException()
+        : base("Este empréstimo já foi devolvido.")
     {
     }
 
-    public LivroIndisponivelException(int livroId)
-        : base($"O livro com ID {livroId} não está disponível para empréstimo.")
+    public EmprestimoJaDevolvidoException(int emprestimoId)
+        : base($"O empréstimo com ID {emprestimoId} já foi devolvido.")
     {
     }
 }
