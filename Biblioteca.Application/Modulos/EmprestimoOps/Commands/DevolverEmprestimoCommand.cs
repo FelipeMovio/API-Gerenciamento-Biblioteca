@@ -1,4 +1,5 @@
 ﻿using Biblioteca.Domain._Core.Base;
+using Biblioteca.Domain.Exceptions;
 using Biblioteca.Domain.Models.EmprestimoMod;
 using Biblioteca.Domain.Models.LivroMod;
 using FluentValidation;
@@ -24,14 +25,14 @@ public sealed record DevolverEmprestimoCommand(
                     request.EmprestimoId,
                     cancellationToken);
 
-            if (emprestimo is null)
+            if (emprestimo == null)
             {
-                return ResultadoDevolucao.EmprestimoNaoEncontrado;
+                throw new EmprestimoNaoEncontradoException(request.EmprestimoId);
             }
 
             if (emprestimo.EstaDevolvido())
             {
-                return ResultadoDevolucao.EmprestimoJaDevolvido;
+                throw new EmprestimoJaDevolvidoException(emprestimo.Id);
             }
 
             Livro? livro =
@@ -39,9 +40,9 @@ public sealed record DevolverEmprestimoCommand(
                     emprestimo.LivroId,
                     cancellationToken);
 
-            if (livro is null)
+            if (livro == null)
             {
-                return ResultadoDevolucao.LivroNaoEncontrado;
+                throw new LivroNaoEncontradoException(emprestimo.LivroId);
             }
 
             emprestimo.RegistrarDevolucao(DateTime.UtcNow);
@@ -60,9 +61,6 @@ public sealed record DevolverEmprestimoCommand(
     public enum ResultadoDevolucao
     {
         Devolvido,
-        EmprestimoNaoEncontrado,
-        EmprestimoJaDevolvido,
-        LivroNaoEncontrado
     }
 
     public sealed class DevolverEmprestimoCommandValidator : AbstractValidator<DevolverEmprestimoCommand>
