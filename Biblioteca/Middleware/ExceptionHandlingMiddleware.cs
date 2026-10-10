@@ -12,7 +12,6 @@ public sealed class ExceptionHandlingMiddleware
     {
         _next = next;
     }
-
     public async Task InvokeAsync(HttpContext context)
     {
         try
