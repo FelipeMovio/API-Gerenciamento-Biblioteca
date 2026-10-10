@@ -25,11 +25,12 @@ public sealed class ExceptionHandlingMiddleware
         }
     }
 
+
     private static async Task TratarExcecaoAsync(
         HttpContext context,
         Exception exception)
     {
-        var (statusCode, mensagem) = exception switch
+        var (statusCode, message) = exception switch
         {
             LivroNaoEncontradoException
                 => (StatusCodes.Status404NotFound, exception.Message),
@@ -46,6 +47,9 @@ public sealed class ExceptionHandlingMiddleware
             EmprestimoJaDevolvidoException
                 => (StatusCodes.Status409Conflict, exception.Message),
 
+            ArgumentException
+                => (StatusCodes.Status400BadRequest, exception.Message),
+
             _ => (
                 StatusCodes.Status500InternalServerError,
                 "Ocorreu um erro interno no servidor.")
@@ -57,7 +61,8 @@ public sealed class ExceptionHandlingMiddleware
         var resposta = new
         {
             status = statusCode,
-            mensagem
+            message,
+            timestamp = DateTime.UtcNow
         };
 
         await context.Response.WriteAsync(
