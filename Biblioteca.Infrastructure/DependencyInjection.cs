@@ -2,11 +2,13 @@
 using Biblioteca.Application.Security;
 using Biblioteca.Domain._Core.Base;
 using Biblioteca.Domain.Models.CategoriaMod;
+using Biblioteca.Domain.Models.EmprestimoMod;
 using Biblioteca.Domain.Models.LivroMod;
 using Biblioteca.Domain.Models.UsuarioMod;
 using Biblioteca.Infrastructure._Core.Base;
 using Biblioteca.Infrastructure.Modulos._Core.Context;
 using Biblioteca.Infrastructure.Modulos.CategoriaDb;
+using Biblioteca.Infrastructure.Modulos.EmprestimoDb;
 using Biblioteca.Infrastructure.Modulos.LivroDb;
 using Biblioteca.Infrastructure.Modulos.UsuarioDb;
 using Biblioteca.Infrastructure.Notifications;
@@ -52,6 +54,7 @@ public static class DependencyInjection
         services.AddScoped<ICategoriaRepository, CategoriaRepository>();
         services.AddScoped<ILivroRepository, LivroRepository>();
         services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+        services.AddScoped<IEmprestimoRepository,EmprestimoRepository>();
 
         return services;
     }

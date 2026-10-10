@@ -1,4 +1,5 @@
-﻿using Biblioteca.Domain.Models.LivroMod;
+﻿using Biblioteca.Domain.Exceptions;
+using Biblioteca.Domain.Models.LivroMod;
 using Biblioteca.Domain.Models.UsuarioMod;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -57,8 +58,7 @@ public class Emprestimo
     public void RegistrarDevolucao(DateTime dataDevolucao)
     {
         if (DataDevolucao.HasValue)
-            throw new InvalidOperationException(
-                "Este empréstimo já foi devolvido.");
+            throw new EmprestimoJaDevolvidoException(Id);
 
         if (dataDevolucao < DataEmprestimo)
             throw new ArgumentException(

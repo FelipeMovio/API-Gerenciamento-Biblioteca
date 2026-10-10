@@ -1,4 +1,5 @@
 ﻿using Biblioteca.Domain._Core.Base;
+using Biblioteca.Domain.Exceptions;
 using Biblioteca.Domain.Models.EmprestimoMod;
 using Biblioteca.Domain.Models.LivroMod;
 using Biblioteca.Domain.Models.UsuarioMod;
@@ -23,19 +24,19 @@ public sealed record CriarEmprestimoCommand(int LivroId,int UsuarioId,DateTime D
         {
             // Regra de negócio será implementada aqui.
             Usuario? usuario = await usuarioRepository.ObterPorIdAsync(request.UsuarioId,cancellationToken);
-            if(usuario == null)
+            if (usuario == null)
             {
-                return ResultadoCriacao.UsuarioNaoEncontrado;
+                throw new UsuarioNaoEncontradoException(request.UsuarioId);
             }
 
             Livro? livro = await livroRepository.ObterPorIdAsync(request.LivroId,cancellationToken);
             if (livro == null)
             {
-                return ResultadoCriacao.LivroNaoEncontrado;
+                throw new LivroNaoEncontradoException(request.LivroId);
             }
             if (!livro.Disponivel)
             {
-                return ResultadoCriacao.LivroIndisponivel;
+                throw new LivroIndisponivelException(livro.Id);
             }
             DateTime dataEmprestimo = DateTime.UtcNow;
 
@@ -56,10 +57,7 @@ public sealed record CriarEmprestimoCommand(int LivroId,int UsuarioId,DateTime D
 
     public enum ResultadoCriacao
     {
-        Criado,
-        UsuarioNaoEncontrado,
-        LivroNaoEncontrado,
-        LivroIndisponivel
+        Criado
     }
 
     public sealed class CriarEmprestimoCommandValidator : AbstractValidator<CriarEmprestimoCommand>

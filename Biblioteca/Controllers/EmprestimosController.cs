@@ -34,23 +34,7 @@ public class EmprestimosController : ControllerBase
         var resultado = await _sender.Send(
             commandComUsuario,
             cancellationToken);
-
-        return resultado switch
-        {
-            CriarEmprestimoCommand.ResultadoCriacao.Criado
-                => StatusCode(StatusCodes.Status201Created),
-
-            CriarEmprestimoCommand.ResultadoCriacao.UsuarioNaoEncontrado
-                => NotFound(new { message = "Usuário não encontrado." }),
-
-            CriarEmprestimoCommand.ResultadoCriacao.LivroNaoEncontrado
-                => NotFound(new { message = "Livro não encontrado." }),
-
-            CriarEmprestimoCommand.ResultadoCriacao.LivroIndisponivel
-                => Conflict(new { message = "O livro não está disponível para empréstimo." }),
-
-            _ => StatusCode(StatusCodes.Status500InternalServerError)
-        };
+        return StatusCode(StatusCodes.Status201Created);
     }
 
     // PUT: /api/emprestimos/{id}/devolver
@@ -63,22 +47,7 @@ public class EmprestimosController : ControllerBase
             new DevolverEmprestimoCommand(id),
             cancellationToken);
 
-        return resultado switch
-        {
-            DevolverEmprestimoCommand.ResultadoDevolucao.Devolvido
-                => NoContent(),
-
-            DevolverEmprestimoCommand.ResultadoDevolucao.EmprestimoNaoEncontrado
-                => NotFound(new { message = "Empréstimo não encontrado." }),
-
-            DevolverEmprestimoCommand.ResultadoDevolucao.EmprestimoJaDevolvido
-                => Conflict(new { message = "Este empréstimo já foi devolvido." }),
-
-            DevolverEmprestimoCommand.ResultadoDevolucao.LivroNaoEncontrado
-                => NotFound(new { message = "Livro associado ao empréstimo não encontrado." }),
-
-            _ => StatusCode(StatusCodes.Status500InternalServerError)
-        };
+        return NoContent();
     }
 
     // GET: /api/emprestimos/{id}
