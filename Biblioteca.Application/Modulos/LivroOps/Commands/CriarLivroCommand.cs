@@ -1,6 +1,7 @@
-﻿using Biblioteca.Domain.Models.CategoriaMod;
+﻿using Biblioteca.Domain._Core.Base;
+using Biblioteca.Domain.Models.CategoriaMod;
+using Biblioteca.Domain.Models.CategoriaMod.Exceptions;
 using Biblioteca.Domain.Models.LivroMod;
-using Biblioteca.Domain._Core.Base;
 using FluentValidation;
 using MediatR;
 
@@ -30,10 +31,9 @@ public sealed record CriarLivroCommand(
                     cancellationToken);
 
             if (categoria is null)
-                throw new Exception(
-                    $"A categoria com ID {request.CategoriaId} não foi encontrada.");
+                throw new CategoriaNaoEncontradaException(request.CategoriaId);
 
-            var livro = new Livro(
+            Livro livro = new(
                 request.Titulo,
                 request.Autor,
                 request.ISBN,
