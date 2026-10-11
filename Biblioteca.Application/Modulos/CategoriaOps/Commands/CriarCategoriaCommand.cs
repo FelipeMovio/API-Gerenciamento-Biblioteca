@@ -12,11 +12,11 @@ public sealed record CriarCategoriaCommand(
         IUnitOfWork unitOfWork)
         : IRequestHandler<CriarCategoriaCommand, int>
     {
-        public async Task<int> Handle(
+        public async Task<int> Handle( 
             CriarCategoriaCommand request,
             CancellationToken cancellationToken)
         {
-            var categoria = new Categoria(request.Nome);
+            Categoria categoria = new Categoria(request.Nome);
 
             categoriaRepository.Adicionar(categoria);
 

@@ -1,5 +1,4 @@
-﻿
-namespace Biblioteca.Domain.Exceptions;
+﻿namespace Biblioteca.Domain.Models.UsuarioMod.Exceptions;
 
 public sealed class UsuarioNaoEncontradoException : Exception
 {

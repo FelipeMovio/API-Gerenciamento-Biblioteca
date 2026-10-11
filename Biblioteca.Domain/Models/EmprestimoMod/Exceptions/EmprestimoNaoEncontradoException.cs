@@ -1,5 +1,4 @@
-﻿
-namespace Biblioteca.Domain.Exceptions;
+﻿namespace Biblioteca.Domain.Models.EmprestimoMod.Exceptions;
 
 public sealed class EmprestimoNaoEncontradoException : Exception
 {

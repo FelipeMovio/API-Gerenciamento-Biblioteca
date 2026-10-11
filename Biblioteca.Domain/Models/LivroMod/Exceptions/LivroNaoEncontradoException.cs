@@ -1,5 +1,4 @@
-﻿
-namespace Biblioteca.Domain.Exceptions;
+﻿namespace Biblioteca.Domain.Models.LivroMod.Exceptions;
 
 public sealed class LivroNaoEncontradoException : Exception
 {

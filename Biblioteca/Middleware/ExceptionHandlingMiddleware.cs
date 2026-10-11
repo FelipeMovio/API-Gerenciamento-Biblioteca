@@ -1,5 +1,7 @@
-﻿
-using Biblioteca.Domain.Exceptions;
+﻿using Biblioteca.Domain.Models.CategoriaMod.Exceptions;
+using Biblioteca.Domain.Models.EmprestimoMod.Exceptions;
+using Biblioteca.Domain.Models.LivroMod.Exceptions;
+using Biblioteca.Domain.Models.UsuarioMod.Exceptions;
 using System.Text.Json;
 
 namespace Biblioteca.Api.Middleware;

@@ -1,9 +1,14 @@
-﻿namespace Biblioteca.Domain.Exceptions;
+﻿namespace Biblioteca.Domain.Models.CategoriaMod.Exceptions;
 
 public class CategoriaNaoEncontradaException : Exception
 {
     public CategoriaNaoEncontradaException(int categoriaId)
         : base($"A categoria com ID {categoriaId} não foi encontrada.")
+    {
+    }
+
+    public CategoriaNaoEncontradaException()
+    : base($"A categoria com ID não foi encontrada.")
     {
     }
 }
