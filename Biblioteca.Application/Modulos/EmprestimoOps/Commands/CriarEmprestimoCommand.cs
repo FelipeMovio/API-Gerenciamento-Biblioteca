@@ -1,7 +1,7 @@
 ﻿using Biblioteca.Domain._Core.Base;
-using Biblioteca.Domain.Exceptions;
 using Biblioteca.Domain.Models.EmprestimoMod;
 using Biblioteca.Domain.Models.LivroMod;
+using Biblioteca.Domain.Models.LivroMod.Exceptions;
 using Biblioteca.Domain.Models.UsuarioMod;
 using Biblioteca.Domain.Models.UsuarioMod.Exceptions;
 using FluentValidation;
