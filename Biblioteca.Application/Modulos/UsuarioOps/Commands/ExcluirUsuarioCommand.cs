@@ -1,5 +1,6 @@
 ﻿using Biblioteca.Domain._Core.Base;
 using Biblioteca.Domain.Models.UsuarioMod;
+using Biblioteca.Domain.Models.UsuarioMod.Exceptions;
 using MediatR;
 
 namespace Biblioteca.Application.Modules.UsuarioOps.Commands;
@@ -16,12 +17,12 @@ public sealed record ExcluirUsuarioCommand(int Id)
             ExcluirUsuarioCommand request,
             CancellationToken cancellationToken)
         {
-            var usuario = await usuarioRepository.ObterPorIdAsync(
+            Usuario? usuario = await usuarioRepository.ObterPorIdAsync(
                 request.Id,
                 cancellationToken);
 
-            if (usuario is null)
-                return false;
+            if (usuario == null)
+                throw new UsuarioNaoEncontradoException(request.Id);
 
             usuarioRepository.Remover(usuario);
 
