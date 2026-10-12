@@ -59,7 +59,7 @@ public sealed record VerificarEmailCommand(
                 usuario => usuario.Email == dadosValidacao.Email,
                 cancellationToken);
 
-            if (usuario is null)
+            if (usuario == null)
             {
                 throw new UsuarioNaoEncontradoException();
             }
