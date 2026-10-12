@@ -64,8 +64,12 @@ public sealed class ExceptionHandlingMiddleware
             CredenciaisInvalidasException
                 => (StatusCodes.Status401Unauthorized, exception.Message),
 
-            // 400 - Argumentos inválidos
-            ArgumentException
+            // 403 - Acesso bloqueado
+            EmailNaoConfirmadoException
+                => (StatusCodes.Status403Forbidden, exception.Message),
+
+            // 400 - Código de validação inválido ou expirado
+            CodigoInvalidoException
                 => (StatusCodes.Status400BadRequest, exception.Message),
 
             // 500 - Erro inesperado
@@ -74,8 +78,10 @@ public sealed class ExceptionHandlingMiddleware
                 "Ocorreu um erro interno no servidor.")
         };
 
-        context.Response.ContentType = "application/json";
+        context.Response.Clear();
         context.Response.StatusCode = statusCode;
+        context.Response.ContentType = "application/json";
+        context.Response.Headers["Cache-Control"] = "no-store";
 
         var resposta = new
         {
