@@ -1,4 +1,5 @@
-﻿using Biblioteca.Domain.Models.CategoriaMod.Exceptions;
+﻿
+using Biblioteca.Domain.Models.CategoriaMod.Exceptions;
 using Biblioteca.Domain.Models.EmprestimoMod.Exceptions;
 using Biblioteca.Domain.Models.LivroMod.Exceptions;
 using Biblioteca.Domain.Models.UsuarioMod.Exceptions;
@@ -14,6 +15,7 @@ public sealed class ExceptionHandlingMiddleware
     {
         _next = next;
     }
+
     public async Task InvokeAsync(HttpContext context)
     {
         try
@@ -26,13 +28,13 @@ public sealed class ExceptionHandlingMiddleware
         }
     }
 
-
     private static async Task TratarExcecaoAsync(
         HttpContext context,
         Exception exception)
     {
         var (statusCode, message) = exception switch
         {
+            // 404 - Recurso não encontrado
             LivroNaoEncontradoException
                 => (StatusCodes.Status404NotFound, exception.Message),
 
@@ -42,15 +44,31 @@ public sealed class ExceptionHandlingMiddleware
             EmprestimoNaoEncontradoException
                 => (StatusCodes.Status404NotFound, exception.Message),
 
+            CategoriaNaoEncontradaException
+                => (StatusCodes.Status404NotFound, exception.Message),
+
+            // 409 - Conflito com o estado atual do recurso
             LivroIndisponivelException
                 => (StatusCodes.Status409Conflict, exception.Message),
 
             EmprestimoJaDevolvidoException
                 => (StatusCodes.Status409Conflict, exception.Message),
 
+            CategoriaPossuiLivroExistenteException
+                => (StatusCodes.Status409Conflict, exception.Message),
+
+            JaExisteUsuarioComEmailException
+                => (StatusCodes.Status409Conflict, exception.Message),
+
+            // 401 - Falha de autenticação
+            CredenciaisInvalidasException
+                => (StatusCodes.Status401Unauthorized, exception.Message),
+
+            // 400 - Argumentos inválidos
             ArgumentException
                 => (StatusCodes.Status400BadRequest, exception.Message),
 
+            // 500 - Erro inesperado
             _ => (
                 StatusCodes.Status500InternalServerError,
                 "Ocorreu um erro interno no servidor.")
