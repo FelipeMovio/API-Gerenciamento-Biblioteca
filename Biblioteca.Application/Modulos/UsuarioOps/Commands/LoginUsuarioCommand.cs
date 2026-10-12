@@ -32,7 +32,7 @@ public sealed record LoginUsuarioCommand(
 
             if (usuario == null)
             {
-                throw new UsuarioNaoEncontradoException();
+                throw new CredenciaisInvalidasException();
             }
 
             PasswordVerificationResult resultado = passwordHasher.VerifyHashedPassword(
@@ -42,7 +42,7 @@ public sealed record LoginUsuarioCommand(
 
             if (resultado == PasswordVerificationResult.Failed)
             {
-                throw new SenhaErradaException();
+                throw new CredenciaisInvalidasException();
             }
 
             if(!usuario.EmailConfirmado)

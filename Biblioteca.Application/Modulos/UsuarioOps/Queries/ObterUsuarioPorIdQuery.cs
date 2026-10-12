@@ -6,7 +6,7 @@ using MediatR;
 namespace Biblioteca.Application.Modules.UsuarioOps.Queries;
 
 public sealed record ObterUsuarioPorIdQuery(int Id)
-    : IRequest<ObterUsuarioPorIdQuery.Response?>
+    : IRequest<ObterUsuarioPorIdQuery.Response>
 {
     public sealed class Handler(
         IUsuarioRepository usuarioRepository)

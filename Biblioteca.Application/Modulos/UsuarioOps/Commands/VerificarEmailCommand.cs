@@ -31,7 +31,7 @@ public sealed record VerificarEmailCommand(
                     out ValidacaoEmailDto? dadosValidacao)
                 || dadosValidacao == null)
             {
-                throw new CodigoIinvalidoException();
+                throw new CodigoInvalidoException();
             }
 
             // Verifica se o código já expirou.
@@ -39,7 +39,7 @@ public sealed record VerificarEmailCommand(
             {
                 memoryCache.Remove(request.Id);
 
-                throw new CodigoIinvalidoException();
+                throw new CodigoInvalidoException();
             }
 
             // Gera o hash do código informado pelo usuário.
@@ -50,7 +50,7 @@ public sealed record VerificarEmailCommand(
                     Convert.FromBase64String(codigoHash),
                     Convert.FromBase64String(dadosValidacao.CodigoHash)))
             {
-                throw new CodigoIinvalidoException();
+                throw new CodigoInvalidoException();
             }
 
             // Procura o usuário pelo e-mail associado à transação.

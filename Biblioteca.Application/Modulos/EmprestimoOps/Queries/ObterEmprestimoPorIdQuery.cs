@@ -5,7 +5,7 @@ using MediatR;
 namespace Biblioteca.Application.Modules.EmprestimoOps.Queries;
 
 public sealed record ObterEmprestimoPorIdQuery(int Id)
-    : IRequest<ObterEmprestimoPorIdQuery.Response?>
+    : IRequest<ObterEmprestimoPorIdQuery.Response>
 {
     public sealed class Handler(
         IEmprestimoRepository emprestimoRepository)
@@ -20,7 +20,7 @@ public sealed record ObterEmprestimoPorIdQuery(int Id)
                 cancellationToken);
 
             if (emprestimo == null)
-                throw new EmprestimoNaoEncontradoException();
+                throw new EmprestimoNaoEncontradoException(request.Id);
 
             return new Response(
                 emprestimo.Id,

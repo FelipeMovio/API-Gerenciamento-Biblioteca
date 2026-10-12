@@ -27,7 +27,7 @@ public sealed record AtualizarUsuarioCommand(
 
             if (usuario == null)
             {
-                throw new UsuarioNaoEncontradoException();
+                throw new UsuarioNaoEncontradoException(request.Id);
             }
 
             string email = request.Email.Trim().ToLowerInvariant();

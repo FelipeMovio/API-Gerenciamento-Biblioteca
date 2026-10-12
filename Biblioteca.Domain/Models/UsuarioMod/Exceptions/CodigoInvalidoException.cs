@@ -1,9 +1,9 @@
 ﻿
 namespace Biblioteca.Domain.Models.UsuarioMod.Exceptions;
 
-public class CodigoIinvalidoException : Exception
+public class CodigoInvalidoException : Exception
 {
-    public CodigoIinvalidoException()
+    public CodigoInvalidoException()
         : base("Código de validação inválido ou expirado.")
     {}
 }
