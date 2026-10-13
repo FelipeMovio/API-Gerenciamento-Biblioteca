@@ -1,6 +1,8 @@
-﻿namespace Biblioteca.Domain.Models.EmprestimoMod.Exceptions;
+﻿using Biblioteca.Domain._Core.ExceptionBase;
 
-public sealed class EmprestimoJaDevolvidoException : Exception
+namespace Biblioteca.Domain.Models.EmprestimoMod.Exceptions;
+
+public sealed class EmprestimoJaDevolvidoException : ConflictException
 {
     public EmprestimoJaDevolvidoException()
         : base("Este empréstimo já foi devolvido.")

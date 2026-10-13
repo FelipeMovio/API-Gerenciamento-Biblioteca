@@ -1,6 +1,8 @@
-﻿namespace Biblioteca.Domain.Models.CategoriaMod.Exceptions;
+﻿using Biblioteca.Domain._Core.ExceptionBase;
 
-public sealed class CategoriaPossuiLivroExistenteException : Exception
+namespace Biblioteca.Domain.Models.CategoriaMod.Exceptions;
+
+public sealed class CategoriaPossuiLivroExistenteException : ConflictException
 {
     public CategoriaPossuiLivroExistenteException()
         : base("Categoria ainda possui livro existente.")

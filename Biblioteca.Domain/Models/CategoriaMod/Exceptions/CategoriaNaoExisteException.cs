@@ -1,6 +1,8 @@
-﻿namespace Biblioteca.Domain.Models.CategoriaMod.Exceptions;
+﻿using Biblioteca.Domain._Core.ExceptionBase;
 
-public class CategoriaNaoExisteException : Exception
+namespace Biblioteca.Domain.Models.CategoriaMod.Exceptions;
+
+public class CategoriaNaoExisteException : NotFoundException
 {
     public CategoriaNaoExisteException()
         : base($"A categoria com ID não foi encontrada.")

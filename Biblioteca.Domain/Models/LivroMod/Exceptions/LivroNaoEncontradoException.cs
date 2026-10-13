@@ -1,6 +1,8 @@
-﻿namespace Biblioteca.Domain.Models.LivroMod.Exceptions;
+﻿using Biblioteca.Domain._Core.ExceptionBase;
 
-public sealed class LivroNaoEncontradoException : Exception
+namespace Biblioteca.Domain.Models.LivroMod.Exceptions;
+
+public sealed class LivroNaoEncontradoException : NotFoundException
 {
     public LivroNaoEncontradoException()
         : base("Livro não encontrado.")

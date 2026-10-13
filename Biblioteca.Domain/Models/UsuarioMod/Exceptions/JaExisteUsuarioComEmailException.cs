@@ -1,6 +1,8 @@
-﻿namespace Biblioteca.Domain.Models.UsuarioMod.Exceptions;
+﻿using Biblioteca.Domain._Core.ExceptionBase;
 
-public sealed class JaExisteUsuarioComEmailException : Exception
+namespace Biblioteca.Domain.Models.UsuarioMod.Exceptions;
+
+public sealed class JaExisteUsuarioComEmailException : ConflictException
 {
     public JaExisteUsuarioComEmailException()
         : base("Usuário com email ja existe.")

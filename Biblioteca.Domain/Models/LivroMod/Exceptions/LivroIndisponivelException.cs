@@ -1,6 +1,8 @@
-﻿namespace Biblioteca.Domain.Models.LivroMod.Exceptions;
+﻿using Biblioteca.Domain._Core.ExceptionBase;
 
-public sealed class LivroIndisponivelException : Exception
+namespace Biblioteca.Domain.Models.LivroMod.Exceptions;
+
+public sealed class LivroIndisponivelException : ConflictException
 {
     public LivroIndisponivelException()
         : base("O livro não está disponível para empréstimo.")
