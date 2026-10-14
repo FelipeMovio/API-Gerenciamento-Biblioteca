@@ -1,7 +1,8 @@
-﻿
-namespace Biblioteca.Domain.Exceptions;
+﻿using Biblioteca.Domain._Core.ExceptionBase;
 
-public sealed class EmprestimoNaoEncontradoException : Exception
+namespace Biblioteca.Domain.Models.EmprestimoMod.Exceptions;
+
+public sealed class EmprestimoNaoEncontradoException : NotFoundException
 {
     public EmprestimoNaoEncontradoException()
         : base("Empréstimo não encontrado.")

@@ -1,11 +1,12 @@
 ﻿using Biblioteca.Domain.Models.UsuarioMod;
 using Biblioteca.Domain.Models.UsuarioMod.Enum;
+using Biblioteca.Domain.Models.UsuarioMod.Exceptions;
 using MediatR;
 
 namespace Biblioteca.Application.Modules.UsuarioOps.Queries;
 
 public sealed record ObterUsuarioPorIdQuery(int Id)
-    : IRequest<ObterUsuarioPorIdQuery.Response?>
+    : IRequest<ObterUsuarioPorIdQuery.Response>
 {
     public sealed class Handler(
         IUsuarioRepository usuarioRepository)
@@ -19,8 +20,8 @@ public sealed record ObterUsuarioPorIdQuery(int Id)
                 request.Id,
                 cancellationToken);
 
-            if (usuario is null)
-                return null;
+            if (usuario == null)
+                throw new UsuarioNaoEncontradoException(request.Id);
 
             return new Response(
                 usuario.Id,

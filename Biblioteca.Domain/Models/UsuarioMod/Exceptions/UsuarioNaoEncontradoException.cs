@@ -1,7 +1,8 @@
-﻿
-namespace Biblioteca.Domain.Exceptions;
+﻿using Biblioteca.Domain._Core.ExceptionBase;
 
-public sealed class UsuarioNaoEncontradoException : Exception
+namespace Biblioteca.Domain.Models.UsuarioMod.Exceptions;
+
+public sealed class UsuarioNaoEncontradoException : NotFoundException
 {
     public UsuarioNaoEncontradoException()
         : base("Usuário não encontrado.")

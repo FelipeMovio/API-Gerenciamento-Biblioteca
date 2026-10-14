@@ -1,5 +1,5 @@
 ﻿
-using Biblioteca.Domain.Exceptions;
+using Biblioteca.Domain._Core.ExceptionBase;
 using System.Text.Json;
 
 namespace Biblioteca.Api.Middleware;
@@ -12,6 +12,7 @@ public sealed class ExceptionHandlingMiddleware
     {
         _next = next;
     }
+
     public async Task InvokeAsync(HttpContext context)
     {
         try
@@ -24,44 +25,54 @@ public sealed class ExceptionHandlingMiddleware
         }
     }
 
-
     private static async Task TratarExcecaoAsync(
         HttpContext context,
         Exception exception)
     {
         var (statusCode, message) = exception switch
         {
-            LivroNaoEncontradoException
-                => (StatusCodes.Status404NotFound, exception.Message),
-
-            UsuarioNaoEncontradoException
-                => (StatusCodes.Status404NotFound, exception.Message),
-
-            EmprestimoNaoEncontradoException
-                => (StatusCodes.Status404NotFound, exception.Message),
-
-            LivroIndisponivelException
-                => (StatusCodes.Status409Conflict, exception.Message),
-
-            EmprestimoJaDevolvidoException
-                => (StatusCodes.Status409Conflict, exception.Message),
-
-            ArgumentException
+            BadRequestException
                 => (StatusCodes.Status400BadRequest, exception.Message),
+
+            UnauthorizedException
+                => (StatusCodes.Status401Unauthorized, exception.Message),
+
+            ForbiddenException
+                => (StatusCodes.Status403Forbidden, exception.Message),
+
+            NotFoundException
+                => (StatusCodes.Status404NotFound, exception.Message),
+
+            MethodNotAllowedException
+                => (StatusCodes.Status405MethodNotAllowed, exception.Message),
+
+            ConflictException
+                => (StatusCodes.Status409Conflict, exception.Message),
+
+            GoneException
+                => (StatusCodes.Status410Gone, exception.Message),
+
+            UnprocessableEntityException
+                => (StatusCodes.Status422UnprocessableEntity, exception.Message),
+
+            TooManyRequestsException
+                => (StatusCodes.Status429TooManyRequests, exception.Message),
 
             _ => (
                 StatusCodes.Status500InternalServerError,
                 "Ocorreu um erro interno no servidor.")
         };
 
-        context.Response.ContentType = "application/json";
+        context.Response.Clear();
         context.Response.StatusCode = statusCode;
+        context.Response.ContentType = "application/json";
+        context.Response.Headers["Cache-Control"] = "no-store";
 
         var resposta = new
         {
             status = statusCode,
             message,
-            timestamp = DateTime.UtcNow
+            timestamp = DateTimeOffset.UtcNow
         };
 
         await context.Response.WriteAsync(

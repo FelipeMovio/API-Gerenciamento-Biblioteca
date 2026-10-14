@@ -15,7 +15,7 @@ public sealed record ObterLivrosQuery
             ObterLivrosQuery request,
             CancellationToken cancellationToken)
         {
-            var livros = await livroRepository.ListarAsync(
+            IEnumerable<LivroItem> livros = await livroRepository.ListarAsync(
                 selector: livro => new LivroItem(
                     livro.Id,
                     livro.Titulo,

@@ -1,7 +1,8 @@
 ﻿using Biblioteca.Domain._Core.Base;
-using Biblioteca.Domain.Exceptions;
 using Biblioteca.Domain.Models.EmprestimoMod;
+using Biblioteca.Domain.Models.EmprestimoMod.Exceptions;
 using Biblioteca.Domain.Models.LivroMod;
+using Biblioteca.Domain.Models.LivroMod.Exceptions;
 using FluentValidation;
 using MediatR;
 

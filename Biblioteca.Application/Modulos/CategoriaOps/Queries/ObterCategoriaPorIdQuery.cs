@@ -1,4 +1,5 @@
 ﻿using Biblioteca.Domain.Models.CategoriaMod;
+using Biblioteca.Domain.Models.CategoriaMod.Exceptions;
 using MediatR;
 
 namespace Biblioteca.Application.Modules.CategoriaOps.Queries;
@@ -19,7 +20,7 @@ public sealed record ObterCategoriaPorIdQuery(int Id)
                 cancellationToken);
 
             if (categoria is null)
-                return null;
+                throw new CategoriaNaoEncontradaException();
 
             return new Response(
                 categoria.Id,

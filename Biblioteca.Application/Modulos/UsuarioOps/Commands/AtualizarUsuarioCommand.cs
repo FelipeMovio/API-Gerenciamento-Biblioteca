@@ -1,5 +1,6 @@
 ﻿using Biblioteca.Domain._Core.Base;
 using Biblioteca.Domain.Models.UsuarioMod;
+using Biblioteca.Domain.Models.UsuarioMod.Exceptions;
 using FluentValidation;
 using MediatR;
 
@@ -20,12 +21,14 @@ public sealed record AtualizarUsuarioCommand(
             AtualizarUsuarioCommand request,
             CancellationToken cancellationToken)
         {
-            var usuario = await usuarioRepository.ObterPorIdAsync(
+            Usuario? usuario = await usuarioRepository.ObterPorIdAsync(
                 request.Id,
                 cancellationToken);
 
-            if (usuario is null)
-                return false;
+            if (usuario == null)
+            {
+                throw new UsuarioNaoEncontradoException(request.Id);
+            }
 
             string email = request.Email.Trim().ToLowerInvariant();
 
@@ -34,8 +37,7 @@ public sealed record AtualizarUsuarioCommand(
                 cancellationToken);
 
             if (emailJaExiste)
-                throw new InvalidOperationException(
-                    "Já existe um usuário cadastrado com este e-mail.");
+                throw new JaExisteUsuarioComEmailException();
 
             usuario.AlterarNome(request.Nome);
             usuario.AlterarEmail(email);

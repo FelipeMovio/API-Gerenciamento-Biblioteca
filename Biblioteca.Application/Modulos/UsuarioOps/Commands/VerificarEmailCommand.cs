@@ -1,6 +1,7 @@
 ﻿using Biblioteca.Application.Modules.UsuarioOps.Dtos;
 using Biblioteca.Domain._Core.Base;
 using Biblioteca.Domain.Models.UsuarioMod;
+using Biblioteca.Domain.Models.UsuarioMod.Exceptions;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
@@ -28,10 +29,9 @@ public sealed record VerificarEmailCommand(
             if (!memoryCache.TryGetValue(
                     request.Id,
                     out ValidacaoEmailDto? dadosValidacao)
-                || dadosValidacao is null)
+                || dadosValidacao == null)
             {
-                return Response.Fail(
-                    "Código de validação inválido ou expirado.");
+                throw new CodigoInvalidoException();
             }
 
             // Verifica se o código já expirou.
@@ -39,32 +39,29 @@ public sealed record VerificarEmailCommand(
             {
                 memoryCache.Remove(request.Id);
 
-                return Response.Fail(
-                    "Código de validação expirado.");
+                throw new CodigoInvalidoException();
             }
 
             // Gera o hash do código informado pelo usuário.
-            var codigoHash = GerarHash(request.Codigo);
+            string codigoHash = GerarHash(request.Codigo);
 
             // Compara o hash recebido com o hash armazenado.
             if (!CryptographicOperations.FixedTimeEquals(
                     Convert.FromBase64String(codigoHash),
                     Convert.FromBase64String(dadosValidacao.CodigoHash)))
             {
-                return Response.Fail(
-                    "Código de validação inválido.");
+                throw new CodigoInvalidoException();
             }
 
             // Procura o usuário pelo e-mail associado à transação.
-            var usuario = await usuarioRepository.SelecionarAsync(
+            Usuario? usuario = await usuarioRepository.SelecionarAsync(
                 usuario => usuario,
                 usuario => usuario.Email == dadosValidacao.Email,
                 cancellationToken);
 
-            if (usuario is null)
+            if (usuario == null)
             {
-                return Response.Fail(
-                    "Usuário não encontrado.");
+                throw new UsuarioNaoEncontradoException();
             }
 
             // Confirma o e-mail.
@@ -77,8 +74,7 @@ public sealed record VerificarEmailCommand(
             // O código não pode ser reutilizado.
             memoryCache.Remove(request.Id);
 
-            return Response.Ok(
-                "E-mail confirmado com sucesso.");
+            return Response.Ok("E-mail confirmado com sucesso.");
         }
 
         private static string GerarHash(string input)
@@ -98,9 +94,6 @@ public sealed record VerificarEmailCommand(
     {
         public static Response Ok(string message)
             => new(true, message);
-
-        public static Response Fail(string message)
-            => new(false, message);
     }
 
     public sealed class Validator

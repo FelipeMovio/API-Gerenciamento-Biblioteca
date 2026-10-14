@@ -1,4 +1,5 @@
 ﻿using Biblioteca.Domain.Models.LivroMod;
+using Biblioteca.Domain.Models.LivroMod.Exceptions;
 using FluentValidation;
 using MediatR;
 
@@ -33,7 +34,7 @@ public sealed record ObterLivroPorIdQuery(int Id)
                 cancellationToken: cancellationToken);
 
             if (livro is null)
-                return null;
+                throw new LivroNaoEncontradoException();
 
             return new Response(
                 livro.Id,

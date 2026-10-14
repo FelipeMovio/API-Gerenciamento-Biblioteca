@@ -1,5 +1,6 @@
 ﻿using Biblioteca.Domain._Core.Base;
 using Biblioteca.Domain.Models.CategoriaMod;
+using Biblioteca.Domain.Models.CategoriaMod.Exceptions;
 using Biblioteca.Domain.Models.LivroMod;
 using MediatR;
 using static Biblioteca.Application.Modules.CategoriaOps.Commands.ExcluirCategoriaCommand;
@@ -23,14 +24,14 @@ public sealed record ExcluirCategoriaCommand(int Id) : IRequest<ResultadoExclusa
                 cancellationToken);
 
             if (categoria is null)
-                return ResultadoExclusao.NaoEncontrada;
+                throw new CategoriaNaoEncontradaException();
 
             bool possuiLivros = await livroRepository.ExisteAsync(
                 livro => livro.CategoriaId == request.Id,
                 cancellationToken);
 
             if (possuiLivros)
-                return ResultadoExclusao.PossuiLivros;
+                throw new CategoriaPossuiLivroExistenteException();
 
             categoriaRepository.Remover(categoria);
 
@@ -42,8 +43,6 @@ public sealed record ExcluirCategoriaCommand(int Id) : IRequest<ResultadoExclusa
 
     public enum ResultadoExclusao
     {
-        Excluida,
-        NaoEncontrada,
-        PossuiLivros
+        Excluida
     }
 }

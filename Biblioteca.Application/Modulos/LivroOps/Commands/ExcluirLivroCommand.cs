@@ -1,5 +1,6 @@
 ﻿using Biblioteca.Domain._Core.Base;
 using Biblioteca.Domain.Models.LivroMod;
+using Biblioteca.Domain.Models.LivroMod.Exceptions;
 using FluentValidation;
 using MediatR;
 
@@ -17,12 +18,12 @@ public sealed record ExcluirLivroCommand(int Id)
             ExcluirLivroCommand request,
             CancellationToken cancellationToken)
         {
-            var livro = await livroRepository.ObterPorIdAsync(
+            Livro? livro = await livroRepository.ObterPorIdAsync(
                 request.Id,
                 cancellationToken);
 
             if (livro is null)
-                return false;
+                throw new LivroNaoEncontradoException(request.Id);
 
             livroRepository.Remover(livro);
 

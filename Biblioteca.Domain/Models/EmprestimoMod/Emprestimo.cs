@@ -1,4 +1,4 @@
-﻿using Biblioteca.Domain.Exceptions;
+﻿using Biblioteca.Domain.Models.EmprestimoMod.Exceptions;
 using Biblioteca.Domain.Models.LivroMod;
 using Biblioteca.Domain.Models.UsuarioMod;
 using System.ComponentModel.DataAnnotations;

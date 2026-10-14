@@ -1,6 +1,8 @@
 ﻿using Biblioteca.Domain._Core.Base;
 using Biblioteca.Domain.Models.CategoriaMod;
+using Biblioteca.Domain.Models.CategoriaMod.Exceptions;
 using Biblioteca.Domain.Models.LivroMod;
+using Biblioteca.Domain.Models.LivroMod.Exceptions;
 using FluentValidation;
 using MediatR;
 
@@ -26,20 +28,19 @@ public sealed record AtualizarLivroCommand(
             AtualizarLivroCommand request,
             CancellationToken cancellationToken)
         {
-            var livro = await livroRepository.ObterPorIdAsync(
+            Livro? livro = await livroRepository.ObterPorIdAsync(
                 request.Id,
                 cancellationToken);
 
-            if (livro is null)
-                return false;
+            if (livro == null)
+                throw new LivroNaoEncontradoException();
 
-            var categoria = await categoriaRepository.ObterPorIdAsync(
+            Categoria? categoria = await categoriaRepository.ObterPorIdAsync(
                 request.CategoriaId,
                 cancellationToken);
 
             if (categoria is null)
-                throw new Exception(
-                    $"A categoria com ID {request.CategoriaId} não foi encontrada.");
+                throw new CategoriaNaoEncontradaException(request.CategoriaId);
 
             livro.AlterarDados(
                 request.Titulo,
@@ -49,9 +50,11 @@ public sealed record AtualizarLivroCommand(
                 categoria.Id);
 
             if (request.Disponivel)
+            {
                 livro.MarcarComoDisponivel();
-            else
+            }else{
                 livro.MarcarComoIndisponivel();
+            }
 
             livroRepository.Atualizar(livro);
 

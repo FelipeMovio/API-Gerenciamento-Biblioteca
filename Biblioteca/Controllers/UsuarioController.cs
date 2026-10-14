@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Biblioteca.Api.Controllers;
 
-
 [ApiController]
 [Route("api/[controller]")]
 [Authorize]
@@ -18,6 +17,7 @@ public class UsuarioController : ControllerBase
         _sender = sender;
     }
 
+    // GET: /api/usuario/me
     [HttpGet("me")]
     public async Task<IActionResult> MeuPerfil(
         CancellationToken cancellationToken)
@@ -31,10 +31,6 @@ public class UsuarioController : ControllerBase
             new ObterUsuarioPorIdQuery(id),
             cancellationToken);
 
-        if (usuario is null)
-            return NotFound();
-
         return Ok(usuario);
     }
 }
-

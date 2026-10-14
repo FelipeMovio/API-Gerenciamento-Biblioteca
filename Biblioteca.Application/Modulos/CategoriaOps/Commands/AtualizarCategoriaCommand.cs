@@ -1,5 +1,6 @@
 ﻿using Biblioteca.Domain._Core.Base;
 using Biblioteca.Domain.Models.CategoriaMod;
+using Biblioteca.Domain.Models.CategoriaMod.Exceptions;
 using MediatR;
 
 namespace Biblioteca.Application.Modules.CategoriaOps.Commands;
@@ -21,8 +22,8 @@ public sealed record AtualizarCategoriaCommand(
                 request.Id,
                 cancellationToken);
 
-            if (categoria is null)
-                return false;
+            if (categoria == null)
+                throw new CategoriaNaoExisteException();
 
             categoria.AlterarNome(request.Nome);
 

@@ -11,7 +11,6 @@ namespace Biblioteca.Api.Controllers;
 [Authorize]
 public class AdminController : ControllerBase
 {
-
     private readonly ISender _sender;
 
     public AdminController(ISender sender)
@@ -19,10 +18,11 @@ public class AdminController : ControllerBase
         _sender = sender;
     }
 
+    // GET: /api/admin/usuario
     [HttpGet]
     [Authorize(Roles = "Administrador")]
     public async Task<IActionResult> GetUsuarios(
-    CancellationToken cancellationToken)
+        CancellationToken cancellationToken)
     {
         var usuarios = await _sender.Send(
             new ObterUsuariosQuery(),
@@ -31,54 +31,47 @@ public class AdminController : ControllerBase
         return Ok(usuarios);
     }
 
-
+    // GET: /api/admin/usuario/{id}
     [HttpGet("{id}")]
     [Authorize(Roles = "Administrador")]
     public async Task<IActionResult> GetUsuarioPorId(
-    int id,
-    CancellationToken cancellationToken)
+        int id,
+        CancellationToken cancellationToken)
     {
         var usuario = await _sender.Send(
             new ObterUsuarioPorIdQuery(id),
             cancellationToken);
 
-        if (usuario is null)
-            return NotFound();
-
         return Ok(usuario);
     }
 
+    // PUT: /api/admin/usuario/{id}
     [HttpPut("{id}")]
     [Authorize(Roles = "Administrador")]
     public async Task<IActionResult> AtualizarUsuario(
-    int id,
-    [FromBody] AtualizarUsuarioCommand command,
-    CancellationToken cancellationToken)
+        int id,
+        [FromBody] AtualizarUsuarioCommand command,
+        CancellationToken cancellationToken)
     {
         var commandComId = command with { Id = id };
 
-        var atualizado = await _sender.Send(
+        await _sender.Send(
             commandComId,
             cancellationToken);
-
-        if (!atualizado)
-            return NotFound();
 
         return NoContent();
     }
 
+    // DELETE: /api/admin/usuario/{id}
     [HttpDelete("{id}")]
     [Authorize(Roles = "Administrador")]
     public async Task<IActionResult> ExcluirUsuario(
-    int id,
-    CancellationToken cancellationToken)
+        int id,
+        CancellationToken cancellationToken)
     {
-        var removido = await _sender.Send(
+        await _sender.Send(
             new ExcluirUsuarioCommand(id),
             cancellationToken);
-
-        if (!removido)
-            return NotFound();
 
         return NoContent();
     }

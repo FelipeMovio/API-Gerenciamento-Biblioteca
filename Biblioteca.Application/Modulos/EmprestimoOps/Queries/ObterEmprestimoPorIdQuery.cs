@@ -1,10 +1,11 @@
 ﻿using Biblioteca.Domain.Models.EmprestimoMod;
+using Biblioteca.Domain.Models.EmprestimoMod.Exceptions;
 using MediatR;
 
 namespace Biblioteca.Application.Modules.EmprestimoOps.Queries;
 
 public sealed record ObterEmprestimoPorIdQuery(int Id)
-    : IRequest<ObterEmprestimoPorIdQuery.Response?>
+    : IRequest<ObterEmprestimoPorIdQuery.Response>
 {
     public sealed class Handler(
         IEmprestimoRepository emprestimoRepository)
@@ -19,7 +20,7 @@ public sealed record ObterEmprestimoPorIdQuery(int Id)
                 cancellationToken);
 
             if (emprestimo == null)
-                return null;
+                throw new EmprestimoNaoEncontradoException(request.Id);
 
             return new Response(
                 emprestimo.Id,

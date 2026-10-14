@@ -1,6 +1,7 @@
 ﻿using Biblioteca.Application.Security;
 using Biblioteca.Domain.Models.UsuarioMod;
 using Biblioteca.Domain.Models.UsuarioMod.Enum;
+using Biblioteca.Domain.Models.UsuarioMod.Exceptions;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
@@ -22,31 +23,31 @@ public sealed record LoginUsuarioCommand(
             LoginUsuarioCommand request,
             CancellationToken cancellationToken)
         {
-            var email = request.Email.Trim().ToLowerInvariant();
+            string email = request.Email.Trim().ToLowerInvariant();
 
-            var usuario = await usuarioRepository.SelecionarAsync(
+            Usuario? usuario = await usuarioRepository.SelecionarAsync(
                 usuario => usuario,
                 usuario => usuario.Email == email,
                 cancellationToken);
 
-            if (usuario is null)
+            if (usuario == null)
             {
-                return null;
+                throw new CredenciaisInvalidasException();
             }
 
-            var resultado = passwordHasher.VerifyHashedPassword(
+            PasswordVerificationResult resultado = passwordHasher.VerifyHashedPassword(
                 usuario,
                 usuario.PasswordHash,
                 request.Password);
 
             if (resultado == PasswordVerificationResult.Failed)
             {
-                return null;
+                throw new CredenciaisInvalidasException();
             }
 
             if(!usuario.EmailConfirmado)
             {
-                return null;
+                throw new EmailNaoConfirmadoException(email);
             }
 
             string token = jwtService.GerarToken(
