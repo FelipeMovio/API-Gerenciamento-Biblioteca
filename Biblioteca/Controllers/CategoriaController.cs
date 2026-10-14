@@ -1,5 +1,4 @@
-﻿
-using Biblioteca.Application.Modules.CategoriaOps.Commands;
+﻿using Biblioteca.Application.Modules.CategoriaOps.Commands;
 using Biblioteca.Application.Modules.CategoriaOps.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -13,12 +12,13 @@ namespace Biblioteca.Api.Controllers;
 public class CategoriaController : ControllerBase
 {
     private readonly ISender _sender;
+
     public CategoriaController(ISender sender)
     {
         _sender = sender;
     }
 
-    // GET: /api/categorias
+    // GET: /api/categoria
     [HttpGet]
     public async Task<IActionResult> GetCategorias(
         CancellationToken cancellationToken)
@@ -30,7 +30,7 @@ public class CategoriaController : ControllerBase
         return Ok(categorias);
     }
 
-    // GET: /api/categorias/{id}
+    // GET: /api/categoria/{id}
     [HttpGet("{id}")]
     public async Task<IActionResult> GetCategoriaPorId(
         int id,
@@ -40,13 +40,10 @@ public class CategoriaController : ControllerBase
             new ObterCategoriaPorIdQuery(id),
             cancellationToken);
 
-        if (categoria is null)
-            return NotFound();
-
         return Ok(categoria);
     }
 
-    // POST: /api/categorias
+    // POST: /api/categoria
     [HttpPost]
     [Authorize(Roles = "Administrador")]
     public async Task<IActionResult> CriarCategoria(
@@ -63,7 +60,7 @@ public class CategoriaController : ControllerBase
             null);
     }
 
-    // PUT: /api/categorias/{id}
+    // PUT: /api/categoria/{id}
     [HttpPut("{id}")]
     [Authorize(Roles = "Administrador")]
     public async Task<IActionResult> AtualizarCategoria(
@@ -73,43 +70,24 @@ public class CategoriaController : ControllerBase
     {
         var commandComId = command with { Id = id };
 
-        var atualizado = await _sender.Send(
+        await _sender.Send(
             commandComId,
             cancellationToken);
-
-        if (!atualizado)
-            return NotFound();
 
         return NoContent();
     }
 
-    // DELETE: /api/categorias/{id}
+    // DELETE: /api/categoria/{id}
     [HttpDelete("{id}")]
     [Authorize(Roles = "Administrador")]
     public async Task<IActionResult> ExcluirCategoria(
         int id,
         CancellationToken cancellationToken)
     {
-        var resultado = await _sender.Send(
+        await _sender.Send(
             new ExcluirCategoriaCommand(id),
             cancellationToken);
 
-        return resultado switch
-        {
-            ExcluirCategoriaCommand.ResultadoExclusao.NaoEncontrada
-                => NotFound(),
-
-            ExcluirCategoriaCommand.ResultadoExclusao.PossuiLivros
-                => Conflict(new
-                {
-                    message = "Não é possível excluir a categoria porque existem livros associados a ela."
-                }),
-
-            ExcluirCategoriaCommand.ResultadoExclusao.Excluida
-                => NoContent(),
-
-            _ => StatusCode(StatusCodes.Status500InternalServerError)
-        };
+        return NoContent();
     }
-
 }
