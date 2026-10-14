@@ -9,7 +9,9 @@ namespace Biblioteca.API.Controllers;
 public class AuthController(ISender sender) : ControllerBase
 {
     [HttpPost("register")]
-    public async Task<IActionResult> Register( [FromBody] CriarUsuarioCommand command,CancellationToken cancellationToken)
+    public async Task<IActionResult> Register(
+        [FromBody] CriarUsuarioCommand command,
+        CancellationToken cancellationToken)
     {
         var usuario = await sender.Send(
             command,
@@ -23,48 +25,36 @@ public class AuthController(ISender sender) : ControllerBase
 
     [HttpPost("enviar-codigo")]
     public async Task<IActionResult> EnviarCodigo(
-    [FromBody] EnviarCodigoEmailCommand command,
-    CancellationToken cancellationToken)
+        [FromBody] EnviarCodigoEmailCommand command,
+        CancellationToken cancellationToken)
     {
         var resultado = await sender.Send(
             command,
             cancellationToken);
-
-        if (!resultado.Success)
-            return BadRequest(resultado);
 
         return Ok(resultado);
     }
 
     [HttpPost("verificar-email")]
     public async Task<IActionResult> VerificarEmail(
-    [FromBody] VerificarEmailCommand command,
-    CancellationToken cancellationToken)
+        [FromBody] VerificarEmailCommand command,
+        CancellationToken cancellationToken)
     {
         var resultado = await sender.Send(
             command,
             cancellationToken);
-
-        if (!resultado.Success)
-            return BadRequest(resultado);
 
         return Ok(resultado);
     }
 
     [HttpPost("login")]
     public async Task<IActionResult> Login(
-    [FromBody] LoginUsuarioCommand command,
-    CancellationToken cancellationToken)
+        [FromBody] LoginUsuarioCommand command,
+        CancellationToken cancellationToken)
     {
         var usuario = await sender.Send(
             command,
             cancellationToken);
-
-        if (usuario is null)
-            return Unauthorized(new
-            {
-                message = "E-mail ou senha inválidos."
-            });
 
         return Ok(usuario);
     }
