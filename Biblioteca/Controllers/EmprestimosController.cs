@@ -29,11 +29,15 @@ public class EmprestimosController : ControllerBase
         if (usuarioId is null)
             return Unauthorized();
 
-        var commandComUsuario = command with { UsuarioId = usuarioId.Value };
+        var commandComUsuario = command with
+        {
+            UsuarioId = usuarioId.Value
+        };
 
-        var resultado = await _sender.Send(
+        await _sender.Send(
             commandComUsuario,
             cancellationToken);
+
         return StatusCode(StatusCodes.Status201Created);
     }
 
@@ -43,7 +47,7 @@ public class EmprestimosController : ControllerBase
         int id,
         CancellationToken cancellationToken)
     {
-        var resultado = await _sender.Send(
+        await _sender.Send(
             new DevolverEmprestimoCommand(id),
             cancellationToken);
 
@@ -60,9 +64,6 @@ public class EmprestimosController : ControllerBase
         var emprestimo = await _sender.Send(
             new ObterEmprestimoPorIdQuery(id),
             cancellationToken);
-
-        if (emprestimo is null)
-            return NotFound();
 
         return Ok(emprestimo);
     }
