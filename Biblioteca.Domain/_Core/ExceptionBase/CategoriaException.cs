@@ -1,64 +1,64 @@
 ﻿namespace Biblioteca.Domain._Core.ExceptionBase;
 
-public abstract class BadRequestException : ApplicationExceptionBase
+public class BadRequestException : ApplicationExceptionBase
 {
-    protected BadRequestException(string message) : base(message)
+    public BadRequestException(string message) : base(message)
     {
     }
 }
 
-public abstract class UnauthorizedException : ApplicationExceptionBase
+public class UnauthorizedException : ApplicationExceptionBase
 {
-    protected UnauthorizedException(string message) : base(message)
+    public UnauthorizedException(string message) : base(message)
     {
     }
 }
 
-public abstract class ForbiddenException : ApplicationExceptionBase
+public  class ForbiddenException : ApplicationExceptionBase
 {
-    protected ForbiddenException(string message) : base(message)
+    public ForbiddenException(string message) : base(message)
     {
     }
 }
 
-public abstract class NotFoundException : ApplicationExceptionBase
+public class NotFoundException : ApplicationExceptionBase
 {
-    protected NotFoundException(string message) : base(message)
+    public NotFoundException(string message) : base(message)
     {
     }
 }
 
-public abstract class MethodNotAllowedException : ApplicationExceptionBase
+public class MethodNotAllowedException : ApplicationExceptionBase
 {
-    protected MethodNotAllowedException(string message) : base(message)
+    public MethodNotAllowedException(string message) : base(message)
     {
     }
 }
 
-public abstract class ConflictException : ApplicationExceptionBase
+public class ConflictException : ApplicationExceptionBase
 {
-    protected ConflictException(string message) : base(message)
+    public ConflictException(string message) : base(message)
     {
     }
 }
 
-public abstract class GoneException : ApplicationExceptionBase
+public class GoneException : ApplicationExceptionBase
 {
-    protected GoneException(string message) : base(message)
+    public GoneException(string message) : base(message)
     {
     }
 }
 
-public abstract class UnprocessableEntityException : ApplicationExceptionBase
+public class UnprocessableEntityException : ApplicationExceptionBase
 {
-    protected UnprocessableEntityException(string message) : base(message)
+    public UnprocessableEntityException(string message) : base(message)
     {
     }
 }
 
-public abstract class TooManyRequestsException : ApplicationExceptionBase
+public class TooManyRequestsException : ApplicationExceptionBase
 {
-    protected TooManyRequestsException(string message) : base(message)
+    public TooManyRequestsException(string message) : base(message)
     {
     }
 }
