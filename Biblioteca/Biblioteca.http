@@ -9,8 +9,8 @@ POST {{Biblioteca_HostAddress}}/api/Auth/register
 Content-Type: application/json
 
 {
-  "nome": "David",
-  "email": "David111@email.com",
+  "nome": "felipe",
+  "email": "felipelsmovio@gmail.com",
   "password": "MinhaSenha123"
 }
 
@@ -30,8 +30,8 @@ POST {{Biblioteca_HostAddress}}/api/Auth/verificar-email
 Content-Type: application/json
 
 {
-  "Id": "f96b8704-eb4c-44b8-b251-abf7cebd07cc",
-  "codigo": "779282"
+  "Id": "f1791939-b903-4d3f-ae49-1cac52342fa8",
+  "codigo": "839609"
 }
 
 ###
