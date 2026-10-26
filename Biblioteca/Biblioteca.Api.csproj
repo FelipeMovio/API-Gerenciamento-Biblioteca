@@ -35,10 +35,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Filters\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Biblioteca.Application\Biblioteca.Application.csproj" />
     <ProjectReference Include="..\Biblioteca.Infrastructure\Biblioteca.Infrastructure.csproj" />
   </ItemGroup>
