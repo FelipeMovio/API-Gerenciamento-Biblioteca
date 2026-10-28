@@ -38,7 +38,7 @@ public class Livro
         = new List<Emprestimo>();
 
     // Construtor utilizado pelo Entity Framework
-    private Livro() { }
+    protected Livro() { }
 
     // Construtor para criação pela aplicação
     public Livro(

@@ -18,7 +18,7 @@ public class Categoria
         = new List<Livro>();
 
     // Construtor utilizado pelo Entity Framework
-    private Categoria() { }
+    protected Categoria() { }
 
     // Construtor para criação pela aplicação
     public Categoria(string nome)

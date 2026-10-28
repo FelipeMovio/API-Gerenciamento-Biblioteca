@@ -30,7 +30,7 @@ public class Emprestimo
     public virtual Usuario? Usuario { get; private set; }
 
     // Construtor utilizado pelo Entity Framework
-    private Emprestimo() { }
+    protected Emprestimo() { }
 
     // Construtor para criação pela aplicação
     public Emprestimo(

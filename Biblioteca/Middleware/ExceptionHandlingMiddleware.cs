@@ -1,5 +1,4 @@
-﻿
-using Biblioteca.Domain._Core.ExceptionBase;
+﻿using Biblioteca.Domain._Core.ExceptionBase;
 using System.Text.Json;
 
 namespace Biblioteca.Api.Middleware;
@@ -7,10 +6,14 @@ namespace Biblioteca.Api.Middleware;
 public sealed class ExceptionHandlingMiddleware
 {
     private readonly RequestDelegate _next;
+    private readonly ILogger<ExceptionHandlingMiddleware> _logger;
 
-    public ExceptionHandlingMiddleware(RequestDelegate next)
+    public ExceptionHandlingMiddleware(
+        RequestDelegate next,
+        ILogger<ExceptionHandlingMiddleware> logger)
     {
         _next = next;
+        _logger = logger;
     }
 
     public async Task InvokeAsync(HttpContext context)
@@ -21,6 +24,12 @@ public sealed class ExceptionHandlingMiddleware
         }
         catch (Exception exception)
         {
+            _logger.LogError(
+                exception,
+                "Erro não tratado durante a requisição {Method} {Path}",
+                context.Request.Method,
+                context.Request.Path);
+
             await TratarExcecaoAsync(context, exception);
         }
     }

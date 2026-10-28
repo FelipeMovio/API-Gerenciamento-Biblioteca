@@ -9,9 +9,9 @@ POST {{Biblioteca_HostAddress}}/api/Auth/register
 Content-Type: application/json
 
 {
-  "nome": "felipe",
-  "email": "felipelsmovio@gmail.com",
-  "password": "MinhaSenha123"
+  "nome": "admin",
+  "email": "admin@biblioteca.com",
+  "password": "admin"
 }
 
 ###
@@ -39,8 +39,8 @@ POST {{Biblioteca_HostAddress}}/api/Auth/login
 Content-Type: application/json
 
 {
-  "email": "felipelsmovio@gmail.com",
-  "password": "MinhaSenha123"
+  "email": "admin@biblioteca.com",
+  "password": "admin"
 }
 
 ###

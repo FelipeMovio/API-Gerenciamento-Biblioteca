@@ -35,7 +35,7 @@ public class Usuario
         = new List<Emprestimo>();
 
     // Construtor utilizado pelo Entity Framework Core
-    private Usuario() { }
+    protected Usuario() { }
 
     // Construtor para criação de um usuário
     public Usuario(string nome, string email)
