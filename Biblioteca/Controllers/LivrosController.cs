@@ -1,4 +1,5 @@
 ﻿
+using Biblioteca.Api.Filters;
 using Biblioteca.Application.Modules.LivroOps.Commands;
 using Biblioteca.Application.Modules.LivroOps.Queries;
 using MediatR;
@@ -34,6 +35,7 @@ public class LivrosController : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [ServiceFilter(typeof(ActionLoggingFilter))]
     public async Task<IActionResult> GetLivroById(
         int id,
         CancellationToken cancellationToken)

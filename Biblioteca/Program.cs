@@ -1,5 +1,6 @@
 
 using Biblioteca;
+using Biblioteca.Api.Filters;
 using Biblioteca.Api.Middleware;
 using Biblioteca.Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -76,6 +77,7 @@ builder.Services
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddScoped<ActionLoggingFilter>();
 
 var app = builder.Build();
 
