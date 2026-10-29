@@ -13,8 +13,8 @@ public sealed class ActionLoggingFilter : IAsyncActionFilter
     }
 
     public async Task OnActionExecutionAsync(
-        ActionExecutingContext context,
-        ActionExecutionDelegate next)
+    ActionExecutingContext context,
+    ActionExecutionDelegate next)
     {
         var controller = context.Controller.GetType().Name;
         var action = context.ActionDescriptor.RouteValues["action"];
@@ -26,14 +26,28 @@ public sealed class ActionLoggingFilter : IAsyncActionFilter
             controller,
             action);
 
-        var executedContext = await next();
+        try
+        {
+            var executedContext = await next();
 
-        stopwatch.Stop();
+            if (executedContext.Exception is not null &&
+                !executedContext.ExceptionHandled)
+            {
+                _logger.LogWarning(
+                    "Action terminou com exceção: {Controller}.{Action}",
+                    controller,
+                    action);
+            }
+        }
+        finally
+        {
+            stopwatch.Stop();
 
-        _logger.LogInformation(
-            "Action finalizada: {Controller}.{Action} | Duração: {ElapsedMilliseconds} ms",
-            controller,
-            action,
-            stopwatch.ElapsedMilliseconds);
+            _logger.LogInformation(
+                "Action finalizada: {Controller}.{Action} | Duração: {ElapsedMilliseconds} ms",
+                controller,
+                action,
+                stopwatch.ElapsedMilliseconds);
+        }
     }
 }
