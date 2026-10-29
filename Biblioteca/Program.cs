@@ -71,13 +71,17 @@ builder.Services
 builder.Services.AddAutoMapper(
     AppDomain.CurrentDomain.GetAssemblies());
 
+builder.Services.AddScoped<ActionLoggingFilter>();
+
 builder.Services
-    .AddControllers()
+    .AddControllers(options =>
+    {
+        options.Filters.AddService<ActionLoggingFilter>();
+    })
     .AddNewtonsoftJson();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddScoped<ActionLoggingFilter>();
 
 var app = builder.Build();
 
