@@ -9,9 +9,9 @@ POST {{Biblioteca_HostAddress}}/api/Auth/register
 Content-Type: application/json
 
 {
-  "nome": "David",
-  "email": "David111@email.com",
-  "password": "MinhaSenha123"
+  "nome": "admin",
+  "email": "admin@biblioteca.com",
+  "password": "admin"
 }
 
 ###
@@ -30,8 +30,8 @@ POST {{Biblioteca_HostAddress}}/api/Auth/verificar-email
 Content-Type: application/json
 
 {
-  "Id": "f96b8704-eb4c-44b8-b251-abf7cebd07cc",
-  "codigo": "779282"
+  "Id": "fca6d5da-6452-422f-b6ac-955d9ac50f1d",
+  "codigo": "838115"
 }
 
 ###
@@ -39,8 +39,8 @@ POST {{Biblioteca_HostAddress}}/api/Auth/login
 Content-Type: application/json
 
 {
-  "email": "felipelsmovio@gmail.com",
-  "password": "MinhaSenha123"
+  "email": "admin@biblioteca.com",
+  "password": "admin"
 }
 
 ###

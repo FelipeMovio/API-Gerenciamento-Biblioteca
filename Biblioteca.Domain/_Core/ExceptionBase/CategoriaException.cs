@@ -1,64 +1,73 @@
 ﻿namespace Biblioteca.Domain._Core.ExceptionBase;
 
-public abstract class BadRequestException : ApplicationExceptionBase
+public class BadRequestException : ApplicationExceptionBase
 {
-    protected BadRequestException(string message) : base(message)
+    public BadRequestException(string message = "A solicitação informada é inválida.")
+        : base(message)
     {
     }
 }
 
-public abstract class UnauthorizedException : ApplicationExceptionBase
+public class UnauthorizedException : ApplicationExceptionBase
 {
-    protected UnauthorizedException(string message) : base(message)
+    public UnauthorizedException(string message = "Não foi possível autenticar a solicitação.")
+        : base(message)
     {
     }
 }
 
-public abstract class ForbiddenException : ApplicationExceptionBase
+public class ForbiddenException : ApplicationExceptionBase
 {
-    protected ForbiddenException(string message) : base(message)
+    public ForbiddenException(string message = "Você não possui permissão para acessar este recurso.")
+        : base(message)
     {
     }
 }
 
-public abstract class NotFoundException : ApplicationExceptionBase
+public class NotFoundException : ApplicationExceptionBase
 {
-    protected NotFoundException(string message) : base(message)
+    public NotFoundException(string message = "O recurso solicitado não foi encontrado.")
+        : base(message)
     {
     }
 }
 
-public abstract class MethodNotAllowedException : ApplicationExceptionBase
+public class MethodNotAllowedException : ApplicationExceptionBase
 {
-    protected MethodNotAllowedException(string message) : base(message)
+    public MethodNotAllowedException(string message = "O método informado não é permitido para este recurso.")
+        : base(message)
     {
     }
 }
 
-public abstract class ConflictException : ApplicationExceptionBase
+public class ConflictException : ApplicationExceptionBase
 {
-    protected ConflictException(string message) : base(message)
+    public ConflictException(string message = "A solicitação gerou um conflito com o estado atual do recurso.")
+        : base(message)
     {
     }
 }
 
-public abstract class GoneException : ApplicationExceptionBase
+public class GoneException : ApplicationExceptionBase
 {
-    protected GoneException(string message) : base(message)
+    public GoneException(string message = "O recurso solicitado não está mais disponível.")
+        : base(message)
     {
     }
 }
 
-public abstract class UnprocessableEntityException : ApplicationExceptionBase
+public class UnprocessableEntityException : ApplicationExceptionBase
 {
-    protected UnprocessableEntityException(string message) : base(message)
+    public UnprocessableEntityException(string message = "Não foi possível processar a solicitação.")
+        : base(message)
     {
     }
 }
 
-public abstract class TooManyRequestsException : ApplicationExceptionBase
+public class TooManyRequestsException : ApplicationExceptionBase
 {
-    protected TooManyRequestsException(string message) : base(message)
+    public TooManyRequestsException(string message = "O limite de requisições foi excedido.")
+        : base(message)
     {
     }
 }

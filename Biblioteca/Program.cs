@@ -1,5 +1,6 @@
 
 using Biblioteca;
+using Biblioteca.Api.Filters;
 using Biblioteca.Api.Middleware;
 using Biblioteca.Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -70,8 +71,13 @@ builder.Services
 builder.Services.AddAutoMapper(
     AppDomain.CurrentDomain.GetAssemblies());
 
+builder.Services.AddScoped<ActionLoggingFilter>();
+
 builder.Services
-    .AddControllers()
+    .AddControllers(options =>
+    {
+        options.Filters.AddService<ActionLoggingFilter>();
+    })
     .AddNewtonsoftJson();
 
 builder.Services.AddEndpointsApiExplorer();
